@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset='UTF-8'>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+		<link href='https://fonts.googleapis.com/css?family=Oxygen:300,400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+	<body ng-app="weatherApp">
+
+		<div class="nav nav-bar">
+			<div class="menu">
+            	
+            	<ul>
+            		<li class='short'><a href="#/"><h3>TODAY</h3></a></li>
+            		<li class='short'><a href="#/daily"><h3>DAILY</h3></a></li>
+            		<li class='short'><a href="#/hourly"><h3>HOURLY</h3></a></li>
+            		<li class='long'><a href="#"><h3>FAVORITES</h3></a></li>
+            	
+            	</ul> 
+            	<div class='extra'></div>
+            </div>
+			<div class="inputdiv">
+				
+                <input type="text" id="search" placeholder="CITY or ZIP"></input>   
+                
+            </div>
+
+		</div>
+
+		<div class='main'>
+			<ng-view class='view'></ng-view>
+		</div>
+		
+
+		<!-- scripts -->
+			<!-- vendors -->
+			<script src="js/node_modules/angular/angular.min.js"></script>
+			<script src="js/node_modules/angular-sanitize/angular-sanitize.js"></script>
+			<script src="js/node_modules/angular-skycons/angular-skycons.min.js"></script>
+			<script src="js/node_modules/angular-route/angular-route.min.js"></script>
+
+
+			<!-- modules -->
+			<script src="js/app.js"></script>
+
+			<!-- controllers -->
+			<script src="js/controllers/mainController.js"></script>
+
+			<!-- services -->
+			<script src="js/services/weatherService.js"></script>
+
+			<!-- directives -->
+			<script src="js/directives/degreeFilter.js"></script>
+
+	</body>
+
+</html>
