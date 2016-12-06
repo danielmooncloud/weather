@@ -1,3 +1,4 @@
+
 app.service('weatherService', function($http) {
 	
 	this.getWeather = function(callback) {
@@ -19,4 +20,5 @@ app.service('weatherService', function($http) {
 		$http.get(locationURL).then(callback);
 	}
 })
+
 

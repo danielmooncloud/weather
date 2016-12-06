@@ -1,4 +1,7 @@
-var app = angular.module('weatherApp', ['ngSanitize', 'angular-skycons', 'ngRoute']);
+
+var app = angular.module('weatherApp', ['angular-skycons', 'ngSanitize', 'ngRoute'])
+
+
 app.config(function($routeProvider) {
 	$routeProvider
 		.when('/', {
@@ -15,5 +18,6 @@ app.config(function($routeProvider) {
 		})
 		.otherwise({
 			redirectTo: '/'
-		});
-})
+		}); 
+}) 
+

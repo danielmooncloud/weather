@@ -30,7 +30,6 @@ app.controller('MainController', function($scope, weatherService) {
 		$scope.location = response.data;
 	})
 	
-	
 
 })
 
