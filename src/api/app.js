@@ -15,7 +15,9 @@ app.use('/', express.static('public'));
 app.post('/api', function(req, res) {
 	var lat = req.body.lat;
 	var lon = req.body.lon;
-	https.get(urlString + lat + ',' + lon, function(response) {
+	var weatherURL = 'https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/';
+	
+	var req = https.get(weatherURL + lat + ',' + lon, function(response) {
 		var body = '';
 		response.on('data', function(chunk) {
 			body += chunk;
@@ -23,8 +25,8 @@ app.post('/api', function(req, res) {
 		response.on('end', function() {
 			res.json(body);
 		})
-		
-	})
+			
+	}) 
 	
 })
 
