@@ -1,5 +1,5 @@
-app.controller('MainController', function($scope, weatherService, locationService) {
-	
+app.controller('HourController', function($scope, weatherService, locationService) {
+
 	$scope.degree = '&#176;';
 	$scope.color = '#83a1d1';
 	$scope.iconSize = {
@@ -13,13 +13,8 @@ app.controller('MainController', function($scope, weatherService, locationServic
 	}); 
 
 	weatherService.getWeather(function(response) {
-		$scope.weather = JSON.parse(response.data);
+		var data = JSON.parse(response.data);
+		$scope.hourly = data.hourly.data;
 	})
+
 })
-
-
-
-
-//"darkSkyAPI": "https://api.darksky.net/forecast/"
-//"dsKey": "efc9eb6642cbfb5aa7be713b8a9ab9de"
-

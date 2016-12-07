@@ -9,12 +9,16 @@ app.config(function($routeProvider) {
 			templateUrl: 'views/main.html' 
 		})
 		.when('/daily', {
-			controller: 'MainController',
+			controller: 'DayController',
 			templateUrl: 'views/daily.html'
 		})
 		.when('/hourly', {
-			controller: 'MainController',
+			controller: 'HourController',
 			templateUrl: 'views/hourly.html'
+		})
+		.when('/test/', {
+			controller: 'SearchController',
+			templateUrl: 'views/test.html'
 		})
 		.otherwise({
 			redirectTo: '/'

@@ -3,21 +3,21 @@
 				
 				<div class='location'><span><h2>{{location.city + ', ' + location.regionName}}</h2></span></div>
 
-				<div class='date'>{{ weather.time * 1000 | date:"EEEE"}}<br>{{ weather.time * 1000 | date:"longDate"}}</div>
+				<div class='date'>{{ weather.currently.time * 1000 | date:"EEEE"}}<br>{{ weather.currently.time * 1000 | date:"longDate"}}</div>
 
 			</div>
 
 
-			<div class="icon"><skycon class="skycon" icon="weather.icon" size="weather.size.big" color="weather.color"></skycon></div>
+			<div class="icon"><skycon class="skycon" icon="weather.currently.icon" size="iconSize.big" color="color"></skycon></div>
 
 			<div class = 'info'>
-				<div class='fahrenheit' ng-click="convert = !convert" ng-show="!convert"><h3> {{weather.temperature | number:0}}<ng-bind-html ng-bind-html="weather.degree"></ng-bind-html>F</h3></div>
+				<div class='fahrenheit' ng-click="convert = !convert" ng-show="!convert"><h3> {{weather.currently.temperature | number:0}}<ng-bind-html ng-bind-html="degree"></ng-bind-html>F</h3></div>
 				
-				<div class='celsius' ng-click="convert = !convert" ng-show="convert"><h3>High: {{weather.temperature | toCelsius | number: 0 }}<ng-bind-html ng-bind-html="weather.degree"></ng-bind-html>C</h3></div>
+				<div class='celsius' ng-click="convert = !convert" ng-show="convert"><h3> {{weather.currently.temperature | toCelsius | number: 0 }}<ng-bind-html ng-bind-html="degree"></ng-bind-html>C</h3></div>
 				
 				
 
-				<div class='description'><h2>{{weather.description}}</h2></div>
+				<div class='description'><h2>{{weather.currently.summary}}</h2></div>
 
 			</div>	
 			

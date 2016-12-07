@@ -4,7 +4,6 @@ app.service('weatherService', function($http) {
 	this.getWeather = function(callback) {
 		var locationURL = 'http://ip-api.com/json';
 		$http.get(locationURL).then(function(response) {
-			var data = response.data;
 			var weatherObject = {
 				"lat": response.data.lat,
 				"lon": response.data.lon
