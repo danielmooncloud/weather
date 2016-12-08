@@ -1,4 +1,4 @@
-app.controller('MainController', function($scope, weatherService, locationService) {
+app.controller('MainController', function($scope, $routeParams, weatherService, locationService) {
 	
 	$scope.degree = '&#176;';
 	$scope.color = '#83a1d1';

@@ -16,9 +16,9 @@ app.config(function($routeProvider) {
 			controller: 'HourController',
 			templateUrl: 'views/hourly.html'
 		})
-		.when('/test/', {
-			controller: 'SearchController',
-			templateUrl: 'views/test.html'
+		.when('/search/:postal', {
+			controller: 'ZipMainController',
+			templateUrl: 'views/main.html'
 		})
 		.otherwise({
 			redirectTo: '/'
