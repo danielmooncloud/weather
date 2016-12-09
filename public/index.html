@@ -9,7 +9,7 @@
 		<link href='https://fonts.googleapis.com/css?family=Oxygen:300,400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
-	<body ng-app="weatherApp">
+	<body ng-app="weatherApp" ng-controller="MainController">
 
 		<div class="nav nav-bar">
 			<div class="menu">
@@ -23,7 +23,7 @@
             	</ul> 
             	<div class='extra'></div>
             </div>
-			<div class="inputdiv" ng-controller="SearchController">
+			<div class="inputdiv">
 				
                 <input type="text" id="search" ng-model="search" on-Keypress="enter($event)" placeholder="CITY or ZIP"></input>   
                 
@@ -50,14 +50,9 @@
 
 			<!-- controllers -->
 			<script src="scripts/controllers/MainController.js"></script>
-			<script src="scripts/controllers/DayController.js"></script>
-			<script src="scripts/controllers/HourController.js"></script>
-			<script src="scripts/controllers/SearchController.js"></script>
-			<script src="scripts/controllers/ZipMainController.js"></script>
 
 			<!-- services -->
 			<script src="scripts/services/weatherService.js"></script>
-			<script src="scripts/services/locationService.js"></script>
 
 			<!-- directives -->
 			<script src="scripts/directives/degreeFilter.js"></script>

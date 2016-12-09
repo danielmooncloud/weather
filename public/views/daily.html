@@ -1,8 +1,8 @@
 		<div class = "panel panel-daily" ng-repeat="day in daily | limitTo: 5" >
 			
 			<div class='info'>
-				
-				<div class='location'><span><h2>{{location.city + ', ' + location.regionName}}</h2></span></div>
+				 
+				<div class='location'><span><h2>{{location.city + ', ' + location.state}}</h2></span></div> 
 
 				<div class='date'>{{ day.time * 1000 | date:"EEEE"}}<br>{{ day.time * 1000 | date:"longDate"}}</div>
 
