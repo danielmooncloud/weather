@@ -1,0 +1,17 @@
+@mixin background($url, $posy: top, $posx: left, $size: cover, $repeat: no-repeat) {
+	background-image: url('#{$path-img}#{$url}');
+	background-position: $posy $posx;
+	background-size: $size;
+	repeat: repeat; 
+}
+
+@mixin font-family($font-family) {
+	@import url(#{$path-font}#{$font-family});
+}
+
+@mixin text($font-size, $l-height: null, $weight: null, $color: null) {
+	font-size: $font-size;
+	line-height: $l-height;
+	font-weight: $weight;
+	color: $color;
+}

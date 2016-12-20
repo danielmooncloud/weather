@@ -1,0 +1,6 @@
+.menu li {
+	transition: .5s background-color ease-in-out;
+	&:hover {
+		background-color: $grey;
+	}
+}
