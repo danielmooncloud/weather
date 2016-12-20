@@ -1,14 +1,7 @@
+'use strict';
+
 app.controller('MainController', function($scope, weatherService) {
 	
-	$scope.zipCode = '';
-
-	$scope.enter = function(e) {
-		if(e.which === 13) {
-			$scope.zipCode = $scope.search;
-			getWeatherData();
-		}
-	}
-
 	$scope.degree = '&#176;';
 	$scope.color = '#83a1d1';
 	$scope.iconSize = {
@@ -16,54 +9,96 @@ app.controller('MainController', function($scope, weatherService) {
 		'small' : 100
 	}
 
-	var locationIP = function(response) {
-		var locationData = response.data;
-		$scope.location = {
-			"city" : locationData.city,
-			"state" : locationData.regionName
+	$scope.search = '';
+
+	$scope.enter = e => {
+		if(e.which === 13) {
+			$scope.search = $scope.search.split(' ').join('');
+			if(zipCode($scope.search)) {
+				$scope.parameters = 'components=postal_code:' + $scope.search;
+			} else if($scope.search !== '' && !zipCode($scope.search)) {
+				$scope.parameters = 'address=' + $scope.search + '&components=country:US';
+			}
+			getWeatherData();
 		}
-		var weatherObject = {
-			"lat": response.data.lat,
-			"lon": response.data.lon
-		}
-		return weatherObject; 
 	}
 
-	var locationZip = function(response) {
-		var locationData = response.data;
-		$scope.location = {
-			"city" : locationData.results[0].address_components[1].long_name,
-			"state" : locationData.results[0].address_components[2].long_name
+	const zipCode = (search) => {
+		if(typeof parseInt(search) === 'number' && search.length === 5) {
+			return true;
+		} else {
+			return false;
 		}
-		var weatherObject = {
-			"lat": response.data.results[0].geometry.location.lat,
-			"lon": response.data.results[0].geometry.location.lng
-		}
-		return weatherObject; 
 	}
 
-	var weather = function(response) {
-		$scope.weather = JSON.parse(response.data);
-		$scope.daily = $scope.weather.daily.data;
-		$scope.hourly = $scope.weather.hourly.data;
+	const locationIP = response => {
+		if(response.status === 200) {
+			let locationData = response.data;
+			$scope.location = {
+				"city" : locationData.city,
+				"state" : locationData.regionName
+			}
+			let weatherObject = {
+				"lat": response.data.lat,
+				"lon": response.data.lon
+			}
+			return weatherObject; 
+		} else {
+			console.log(response.status + ": There was an error getting your location coordinates")
+		}
 	}
 
-	function getWeatherData() { 
-		if($scope.zipCode === '') {
-			var locationURL = weatherService.ipLocationUrl;
+	const location = response => {
+
+		if(response.status === 200) {
+			let locationData = response.data;
+			if(zipCode($scope.search)) {
+				$scope.location = {
+					"city" : locationData.results[0].address_components[1].long_name,
+					"state" : locationData.results[0].address_components[3].long_name
+				}
+			
+			} else {
+				$scope.location = {
+				"city" : locationData.results[0].address_components[0].long_name,
+				"state" : locationData.results[0].address_components[2].long_name
+				}
+			}
+			
+			let weatherObject = {
+				"lat": response.data.results[0].geometry.location.lat,
+				"lon": response.data.results[0].geometry.location.lng
+			}
+			return weatherObject; 
+		} else {
+			console.log(response.status + ": Connection error")
+		}
+	}
+		
+	const weather = response => {
+		if(response.status === 200) {
+			$scope.weather = JSON.parse(response.data);
+			$scope.daily = $scope.weather.daily.data;
+			$scope.hourly = $scope.weather.hourly.data;
+		} else {
+			console.log("There was an error getting the weather Data for this location")
+		}
+		
+	}
+
+
+	function getWeatherData() { 		
+		if($scope.search === '') {
+			let locationURL = weatherService.ipLocationUrl;
 			weatherService.getWeather(locationIP, weather, locationURL);
-		} else if(typeof parseInt($scope.zipCode) === 'number' && $scope.zipCode.length === 5 ){
-			var locationURL = weatherService.zipLocationUrl[0] + $scope.zipCode + weatherService.zipLocationUrl[1];
-			weatherService.getWeather(locationZip, weather, locationURL);
-		}						
+		} else {		
+			let locationURL = weatherService.locationUrl[0] + $scope.parameters + weatherService.locationUrl[1]
+			weatherService.getWeather(location, weather, locationURL);
+		} 				
 	}
 
 	getWeatherData();
-	
-	
 })
-
-
 
 
 //"darkSkyAPI": "https://api.darksky.net/forecast/"

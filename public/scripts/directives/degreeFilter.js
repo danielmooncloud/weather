@@ -1,3 +1,4 @@
+'use strict';
 
 app.filter('toCelsius', function() {
 	return function(number) {

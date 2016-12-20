@@ -11,12 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.9",
+    "angular-google-maps": "^2.3.2",
     "angular-route": "^1.5.9",
     "angular-sanitize": "^1.5.9",
     "angular-skycons": "git+https://github.com/projectweekend/angular-skycons.git",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "ipware": "^1.0.0"
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
     "webpack": "^1.13.3"

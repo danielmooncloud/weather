@@ -1,3 +1,5 @@
+'use strict';
+
 
 var app = angular.module('weatherApp', ['angular-skycons', 'ngSanitize', 'ngRoute'])
 
@@ -16,5 +18,6 @@ app.config(function($routeProvider) {
 		.otherwise({
 			redirectTo: '/'
 		}); 
+	
 }) 
 

@@ -1,3 +1,5 @@
+'use strict';
+
 app.directive('onKeypress', function() {
 	return {
 		scope: {
