@@ -1,7 +1,7 @@
 'use strict';
 
 
-var app = angular.module('weatherApp', ['angular-skycons', 'ngSanitize', 'ngRoute'])
+var app = angular.module('weatherApp', ['angular-skycons', 'ngRoute', 'ngSanitize'])
 
 
 app.config(function($routeProvider) {
