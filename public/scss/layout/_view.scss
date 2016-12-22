@@ -1,15 +1,15 @@
 
 .view {
 	@extend %width;
-	@extend %flex;
-	flex: 1 100% auto;
+	@extend %flexbox;
+	@include flex(1, 0);
 	height: 100%;	
 }
 
 .panel {
-	@extend %flex;
-	@extend %basis;
-	flex-direction: column;
+	@extend %flexbox;
+	@include flex(1, 0);
+	@include flex-direction(column);
 	margin: 15% auto 0;
 	max-width: 20%;
 	width: 5%;
@@ -27,7 +27,7 @@
 }
 
 .info {
-	@extend %basis;
+	@include flex(1, 0);
 }
 	
 #hour {

@@ -25,7 +25,7 @@ input {
 	@extend %radius;
 	border: 3px solid $grey;	
 	&:focus {
-	outline: none;
+		outline: none;
 	}
 }
 		

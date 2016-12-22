@@ -1,25 +1,23 @@
 
 .menu {
-	@extend %flex;
-	@extend %basis;
+	@extend %flexbox;
+	@include flex(1, 0);
 }
 
 ul {
-	@extend %flex;
-	flex: 3 0;
-	flex-wrap: wrap;
+	@extend %flexbox;
+	@include flex(3, 0);
 	margin: 0;
 }
 
 li {
-	@extend %basis;
+	@include flex(1, 0);
 	padding-top: 3%;
 }
 
 .nav {
 	@extend %width;
-	@extend %flex;
-	flex-wrap: wrap;	
+	@extend %flexbox;
 	position: fixed;
 	z-index: 1000;
 	top: 0;
@@ -28,8 +26,8 @@ li {
 }
 
 .inputdiv {
-	flex: 2 0;
-	align-self: center;
+	@include flex(2, 0);
+	@extend %align-self;
 }
 
 input {
