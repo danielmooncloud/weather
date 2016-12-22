@@ -28,22 +28,35 @@
 }
 
 
-@mixin flex-direction($value: row) {
-	@if $value == row-reverse {
+@mixin flexbox($flex-direction: row, $justify-content: null, $display: flex) {
+	
+	display: $display;
+
+	@if $flex-direction == row-reverse {
 		-webkit-box-direction: reverse;
 		-webkit-box-orient: horizontal;
-	} @else if $value == column {
+	} @else if $flex-direction == column {
 		-webkit-box-direction: normal;
 		-webkit-box-orient: vertical;
-	} @else if $value == column-reverse {
+	} @else if $flex-direction == column-reverse {
 		-webkit-box-direction: reverse;
 		-webkit-box-orient: vertical;
 	} @else {
 		-webkit-box-direction: normal;
 		-webkit-box-orient: horizontal;
 	}
-	-webkit-flex-direction: $value;
-	-moz-flex-direction: $value;
-	-ms-flex-direction: $value;
-	flex-direction: $value;
+	-webkit-flex-direction: $flex-direction;
+	   -moz-flex-direction: $flex-direction;
+	    -ms-flex-direction: $flex-direction;
+	        flex-direction: $flex-direction;
+
+	      -webkit-box-pack: $justify-content;
+  	    	 -ms-flex-pack: $justify-content;
+  	       justify-content: $justify-content;
+}
+
+@mixin flex($grow, $basis) {
+	-webkit-box-flex: $grow;
+	        -ms-flex: $grow $basis;
+	            flex: $grow $basis;
 }

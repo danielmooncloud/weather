@@ -1,6 +1,10 @@
 
 .main {
 	@extend %margin;
-	@extend %flexbox;
+	@include flexbox();
 	height: 100%;		
 }
+
+
+
+

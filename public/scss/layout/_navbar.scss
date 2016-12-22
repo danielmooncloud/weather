@@ -1,11 +1,14 @@
 
 .menu {
-	@extend %flexbox;
+	@include flexbox();
 	@include flex(1, 0);
+	@media #{$break-laptop} {
+		display: none;
+	}
 }
 
 ul {
-	@extend %flexbox;
+	@include flexbox();
 	@include flex(3, 0);
 	margin: 0;
 }
@@ -17,7 +20,7 @@ li {
 
 .nav {
 	@extend %width;
-	@extend %flexbox;
+	@include flexbox();
 	position: fixed;
 	z-index: 1000;
 	top: 0;

@@ -2,7 +2,7 @@ body {
 	@include background('sky.jpg');
 }
 
-.location, .fahrenheit, .celsius, .description {
+.location, .fahrenheit, .celsius, .description, .date {
 	text-shadow: 1px 1px black;
 	overflow: hidden;
 }
@@ -28,6 +28,7 @@ input {
 		outline: none;
 	}
 }
+
 		
 	
 

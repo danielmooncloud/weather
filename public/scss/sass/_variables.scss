@@ -10,6 +10,13 @@ $path-font				:	'https://fonts.googleapis.com/css?family=';
 $path-img				:	'../images/';
 
 
-
+/* font stacks */
 $stack-sans-serif		:	Helvetica, Arial, sans-serif;
 $stack-oxygen			:	'Oxygen', $stack-sans-serif;
+
+
+/* media queries */
+$break-laptop			:  '(max-width: 992px)';
+$break-tablet			:  '(max-width: 768px)';
+
+
