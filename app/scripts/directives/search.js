@@ -1,6 +1,8 @@
 'use strict';
 
-app.directive('onKeypress', function() {
+var angular = require('angular');
+
+angular.module('weatherApp').directive('onKeypress', function() {
 	return {
 		scope: {
 			handler: '&onKeypress'

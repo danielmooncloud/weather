@@ -1,6 +1,8 @@
 'use strict';
 
-app.controller('MainController', function($scope, weatherService) {
+var angular = require('angular');
+
+angular.module('weatherApp').controller('MainController', function($scope, weatherService) {
 	
 	$scope.degree = '&#176;';
 	$scope.color = '#83a1d1';

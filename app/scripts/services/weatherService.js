@@ -1,7 +1,8 @@
 'use strict';
 
+var angular = require('angular');
 
-app.service('weatherService', function($http) {
+angular.module('weatherApp').service('weatherService', function($http) {
 
 	this.ipLocationUrl = 'http://ip-api.com/json';
 
