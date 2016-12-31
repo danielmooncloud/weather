@@ -11,8 +11,7 @@ webpackJsonp([0],[
 	var app = angular.module('weatherApp', [ngRoute, ngSanitize, 'angular-skycons'])
 
 
-	app.config(function($routeProvider, $locationProvider) {
-		$locationProvider.html5Mode(true);
+	app.config(function($routeProvider) {
 		$routeProvider
 			.when('/', {
 				templateUrl: 'views/main.html' 
