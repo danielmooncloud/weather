@@ -17,7 +17,7 @@ app.use(logger("dev"));
 app.use(jsonParser());
 
 app.use('/', express.static('public'));
-app.use(favicon(__dirname + '/public/images/cloud.png'));
+app.use(favicon('/public/images/cloud.png'));
 
 
 app.use('/api', routes);
