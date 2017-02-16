@@ -41,8 +41,8 @@ angular.module('weatherApp').controller('MainController', function($scope, weath
 				"state" : locationData.regionName
 			}
 			let weatherObject = {
-				"lat": response.data.lat,
-				"lon": response.data.lon
+				"lat": response.data.latitude,
+				"lon": response.data.longitude
 			}
 			return weatherObject; 
 		} else {

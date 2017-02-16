@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular.module('weatherApp').service('weatherService', function($http) {
 
-	this.ipLocationUrl = 'http://ip-api.com/json';
+	this.ipLocationUrl = 'https://ipapi.co/json';
 
 	this.locationUrl = ['https://maps.googleapis.com/maps/api/geocode/json?', '&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I'];
 
