@@ -6,7 +6,8 @@ var https = require('https');
 var port = process.env.PORT || 4000;
 var jsonParser = require('body-parser').json;
 var logger = require('morgan');
-var routes = require('./routes/routes')
+var routes = require('./routes/routes');
+var favicon = require('serve-favicon');
 var urlString = 'https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/';
 
 
@@ -16,7 +17,7 @@ app.use(logger("dev"));
 app.use(jsonParser());
 
 app.use('/', express.static('public'));
-
+app.use(favicon(__dirname + 'public/images/cloud.png'));
 
 
 app.use('/api', routes);
