@@ -9,6 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "7.5.0"
+  },
   "dependencies": {
     "angular": "^1.5.9",
     "angular-route": "^1.5.9",
