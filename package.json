@@ -19,10 +19,10 @@
     "angular-skycons": "git+https://github.com/projectweekend/angular-skycons.git",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "serve-favicon": "^2.3.2"
+    "serve-favicon": "^2.3.2",
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
-    "morgan": "^1.7.0",
     "webpack": "^1.13.3"
   }
 }
