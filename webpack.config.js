@@ -8,8 +8,8 @@ module.exports = {
         vendor: ['angular', 'angular-route', 'angular-sanitize']  
     },
     output: {
-        path: __dirname + '/public/scripts',
-        filename: 'weather.bundle.js'
+        path: __dirname + '/public',
+        filename: 'app.bundle.js'
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")

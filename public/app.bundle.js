@@ -8,7 +8,8 @@ webpackJsonp([0],[
 	var ngRoute = __webpack_require__(3);
 	var ngSanitize = __webpack_require__(5);
 
-	var app = angular.module('weatherApp', [ngRoute, ngSanitize, 'angular-skycons'])
+
+	var app = angular.module('weatherApp', [ngRoute, ngSanitize, "angular-skycons"]);
 
 
 	app.config(function($routeProvider) {

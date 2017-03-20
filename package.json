@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,9 @@
     "morgan": "^1.7.0"
   },
   "devDependencies": {
-    "webpack": "^1.13.3"
+    "angular-skycons": "git+https://github.com/projectweekend/angular-skycons.git",
+    "hot-loader": "0.0.0",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^2.4.2"
   }
 }

@@ -4,7 +4,8 @@ var angular = require('angular');
 var ngRoute = require('angular-route');
 var ngSanitize = require('angular-sanitize');
 
-var app = angular.module('weatherApp', [ngRoute, ngSanitize, 'angular-skycons'])
+
+var app = angular.module('weatherApp', [ngRoute, ngSanitize, "angular-skycons"]);
 
 
 app.config(function($routeProvider) {
