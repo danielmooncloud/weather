@@ -3,7 +3,7 @@
 var angular = require('angular');
 var ngRoute = require('angular-route');
 var ngSanitize = require('angular-sanitize');
-
+require("./scss/application.scss");
 
 var app = angular.module('weatherApp', [ngRoute, ngSanitize, "angular-skycons"]);
 
@@ -29,3 +29,4 @@ require('./scripts/controllers/MainController.js');
 require('./scripts/services/weatherService.js');
 require('./scripts/directives/degreeFilter.js');
 require('./scripts/directives/search.js');
+
