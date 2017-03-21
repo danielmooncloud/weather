@@ -18,7 +18,8 @@ module.exports = {
                 test: /\.scss?/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader", 
-                    use: "css-loader!resolve-url-loader!sass-loader?sourceMap"
+                    use: "css-loader!resolve-url-loader!sass-loader?sourceMap",
+                    publicPath: "images/"
                 })
             },
             {
@@ -28,7 +29,7 @@ module.exports = {
             },
             {
                 test: /\.png$/,
-                loader: "file-loader"
+                loader: "file-loader?outputPath=images/"
             }
         ]
     },
