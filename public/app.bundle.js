@@ -17,25 +17,15 @@ webpackJsonp([0],[
 var angular = __webpack_require__(0);
 
 angular.module('weatherApp').controller('MainController', function ($scope, weatherService) {
-
-	$scope.degree = '&#176;';
-	$scope.color = '#83a1d1';
-	$scope.iconSize = {
-		'big': 200,
-		'small': 100
-	};
+	var _this = this;
 
 	$scope.search = '';
 
 	$scope.enter = function (e) {
 		if (e.which === 13) {
-			$scope.search = $scope.search.split(' ').join('');
-			if (zipCode($scope.search)) {
-				$scope.parameters = 'components=postal_code:' + $scope.search;
-			} else if ($scope.search !== '' && !zipCode($scope.search)) {
-				$scope.parameters = 'address=' + $scope.search + '&components=country:US';
-			}
-			getWeatherData();
+			var search = $scope.search.split(' ').join('');
+			var location = zipCode(search) ? 'components=postal_code:' + search : 'address=' + search + '&components=country:US';
+			_this.getWeatherFromSearch(location, weather);
 		}
 	};
 
@@ -47,7 +37,7 @@ angular.module('weatherApp').controller('MainController', function ($scope, weat
 		}
 	};
 
-	var locationIP = function locationIP(response) {
+	var locationFromIP = function locationFromIP(response) {
 		if (response.status === 200) {
 			var locationData = response.data;
 			$scope.location = {
@@ -64,7 +54,7 @@ angular.module('weatherApp').controller('MainController', function ($scope, weat
 		}
 	};
 
-	var location = function location(response) {
+	var locationFromSearch = function locationFromSearch(response) {
 
 		if (response.status === 200) {
 			var locationData = response.data;
@@ -90,27 +80,26 @@ angular.module('weatherApp').controller('MainController', function ($scope, weat
 		}
 	};
 
-	var weather = function weather(response) {
+	var displayWeather = function displayWeather(response) {
 		if (response.status === 200) {
-			$scope.weather = JSON.parse(response.data);
-			$scope.daily = $scope.weather.daily.data;
-			$scope.hourly = $scope.weather.hourly.data;
+			$scope.city = response.data.city;
+			$scope.state = response.data.region;
+			$scope.current = response.data.currently;
+			$scope.daily = response.data.daily.data;
+			$scope.hourly = response.data.hourly.data;
 		} else {
 			console.log("There was an error getting the weather Data for this location");
 		}
 	};
 
 	function getWeatherData() {
-		if ($scope.search === '') {
-			var locationURL = weatherService.ipLocationUrl;
-			weatherService.getWeather(locationIP, weather, locationURL);
-		} else {
-			var _locationURL = weatherService.locationUrl[0] + $scope.parameters + weatherService.locationUrl[1];
-			weatherService.getWeather(location, weather, _locationURL);
-		}
+		var locationURL = $scope.search ? 'https://maps.googleapis.com/maps/api/geocode/json?' + $scope.parameters + '&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I' : 'https://ipapi.co/json';
+		var getLocation = $scope.search ? locationFromSearch : locationFromIP;
+		weatherService.getWeather(getLocation, getWeather, locationURL);
 	}
 
-	getWeatherData();
+	//getWeatherData();
+	weatherService.getWeatherFromIP(displayWeather);
 });
 
 //"darkSkyAPI": "https://api.darksky.net/forecast/"
@@ -164,19 +153,26 @@ var angular = __webpack_require__(0);
 
 angular.module('weatherApp').service('weatherService', function ($http) {
 
-	this.ipLocationUrl = 'https://ipapi.co/json';
+	// const logError = error => console.log('error: ' + error.data.err.message);
 
-	this.locationUrl = ['https://maps.googleapis.com/maps/api/geocode/json?', '&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I'];
+	// this.getWeather = (firstCallback, secondCallback, url) => {
 
-	var logError = function logError(error) {
-		return console.log('error: ' + error.data.err.message);
+	// 	$http.get(url)
+	// 		.then(firstCallback)
+	// 		.then(function(object) {
+	// 			return $http.post('/api', object).catch(logError);
+	// 		})
+	// 		.then(secondCallback)
+	// 		.catch(logError) 
+
+	// } 
+
+	this.getWeatherFromIP = function (callback) {
+		return $http.get("/api/ip").then(callback);
 	};
 
-	this.getWeather = function (firstCallback, secondCallback, url) {
-
-		$http.get(url).then(firstCallback).then(function (object) {
-			return $http.post('/api', object).catch(logError);
-		}).then(secondCallback).catch(logError);
+	this.getWeatherFromSearch = function (location, callback) {
+		$http.post("/api/search", { location: location }).then(callback).catch(logError);
 	};
 });
 
