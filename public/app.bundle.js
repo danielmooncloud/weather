@@ -3,6 +3,12 @@ webpackJsonp([0],[
 /* 1 */,
 /* 2 */,
 /* 3 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -111,7 +117,7 @@ angular.module('weatherApp').controller('MainController', function ($scope, weat
 //"dsKey": "efc9eb6642cbfb5aa7be713b8a9ab9de"
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -126,7 +132,7 @@ angular.module('weatherApp').filter('toCelsius', function () {
 });
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -148,7 +154,7 @@ angular.module('weatherApp').directive('onKeypress', function () {
 });
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -175,16 +181,7 @@ angular.module('weatherApp').service('weatherService', function ($http) {
 });
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -193,7 +190,7 @@ angular.module('weatherApp').service('weatherService', function ($http) {
 var angular = __webpack_require__(0);
 var ngRoute = __webpack_require__(1);
 var ngSanitize = __webpack_require__(2);
-__webpack_require__(7);
+__webpack_require__(3);
 
 var app = angular.module('weatherApp', [ngRoute, ngSanitize, "angular-skycons"]);
 
@@ -209,10 +206,10 @@ app.config(function ($routeProvider) {
 	});
 });
 
-__webpack_require__(3);
-__webpack_require__(6);
 __webpack_require__(4);
+__webpack_require__(7);
 __webpack_require__(5);
+__webpack_require__(6);
 
 /***/ })
-],[11]);
+],[8]);
