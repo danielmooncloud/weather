@@ -10,7 +10,8 @@ angular.module('weatherApp').service('weatherService', function($http) {
 	this.getWeatherFromSearch = (location, callback) => {
 		$http.post("/api/search", {location})
 			.then(callback)
-			.catch(logError);
 	}
 })
+
+
 

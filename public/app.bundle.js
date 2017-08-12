@@ -17,66 +17,12 @@ webpackJsonp([0],[
 var angular = __webpack_require__(0);
 
 angular.module('weatherApp').controller('MainController', function ($scope, weatherService) {
-	var _this = this;
-
-	$scope.search = '';
-
-	$scope.enter = function (e) {
-		if (e.which === 13) {
-			var search = $scope.search.split(' ').join('');
-			var location = zipCode(search) ? 'components=postal_code:' + search : 'address=' + search + '&components=country:US';
-			_this.getWeatherFromSearch(location, weather);
-		}
-	};
 
 	var zipCode = function zipCode(search) {
 		if (typeof parseInt(search) === 'number' && search.length === 5) {
 			return true;
 		} else {
 			return false;
-		}
-	};
-
-	var locationFromIP = function locationFromIP(response) {
-		if (response.status === 200) {
-			var locationData = response.data;
-			$scope.location = {
-				"city": locationData.city,
-				"state": locationData.regionName
-			};
-			var weatherObject = {
-				"lat": response.data.latitude,
-				"lon": response.data.longitude
-			};
-			return weatherObject;
-		} else {
-			console.log(response.status + ": There was an error getting your location coordinates");
-		}
-	};
-
-	var locationFromSearch = function locationFromSearch(response) {
-
-		if (response.status === 200) {
-			var locationData = response.data;
-			if (zipCode($scope.search)) {
-				$scope.location = {
-					"city": locationData.results[0].address_components[1].long_name,
-					"state": locationData.results[0].address_components[3].long_name
-				};
-			} else {
-				$scope.location = {
-					"city": locationData.results[0].address_components[0].long_name,
-					"state": locationData.results[0].address_components[2].long_name
-				};
-			}
-
-			var weatherObject = {
-				"lat": response.data.results[0].geometry.location.lat,
-				"lon": response.data.results[0].geometry.location.lng
-			};
-			return weatherObject;
-		} else {
-			console.log(response.status + ": Connection error");
 		}
 	};
 
@@ -92,18 +38,16 @@ angular.module('weatherApp').controller('MainController', function ($scope, weat
 		}
 	};
 
-	function getWeatherData() {
-		var locationURL = $scope.search ? 'https://maps.googleapis.com/maps/api/geocode/json?' + $scope.parameters + '&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I' : 'https://ipapi.co/json';
-		var getLocation = $scope.search ? locationFromSearch : locationFromIP;
-		weatherService.getWeather(getLocation, getWeather, locationURL);
-	}
+	$scope.enter = function (e) {
+		if (e.which === 13) {
+			var search = $scope.search.split(' ').join('');
+			var location = zipCode(search) ? 'components=postal_code:' + search : 'address=' + search + '&components=country:US';
+			weatherService.getWeatherFromSearch(location, displayWeather);
+		}
+	};
 
-	//getWeatherData();
 	weatherService.getWeatherFromIP(displayWeather);
 });
-
-//"darkSkyAPI": "https://api.darksky.net/forecast/"
-//"dsKey": "efc9eb6642cbfb5aa7be713b8a9ab9de"
 
 /***/ }),
 /* 5 */
@@ -153,26 +97,12 @@ var angular = __webpack_require__(0);
 
 angular.module('weatherApp').service('weatherService', function ($http) {
 
-	// const logError = error => console.log('error: ' + error.data.err.message);
-
-	// this.getWeather = (firstCallback, secondCallback, url) => {
-
-	// 	$http.get(url)
-	// 		.then(firstCallback)
-	// 		.then(function(object) {
-	// 			return $http.post('/api', object).catch(logError);
-	// 		})
-	// 		.then(secondCallback)
-	// 		.catch(logError) 
-
-	// } 
-
 	this.getWeatherFromIP = function (callback) {
 		return $http.get("/api/ip").then(callback);
 	};
 
 	this.getWeatherFromSearch = function (location, callback) {
-		$http.post("/api/search", { location: location }).then(callback).catch(logError);
+		$http.post("/api/search", { location: location }).then(callback);
 	};
 });
 

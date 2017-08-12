@@ -24,50 +24,34 @@ const getData = (url) =>
 	);
 
 
-const getWeatherFromIP = async (req, res, next) => {
+const getWeatherData = async (req, res, next) => {
+	let locationURL = req.body.location ? 
+		`https://maps.googleapis.com/maps/api/geocode/json?${req.body.location}&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I` :
+		"https://ipapi.co/json"
+	
 	try {
-		let locationData = await getData("https://ipapi.co/json");
+		let locationData = await getData(locationURL);
+		console.log(locationData);
 		let weatherData = await getData(`https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/${locationData.latitude},${locationData.longitude}`);
-		locationData = {
+		res.send({
 			...locationData,
 			...weatherData
-		}
-		res.send(locationData);
+		});
 	} catch(e) {
 		next(e);
 	}
 }
 
 
+
+
 router.get("/ip", (req, res, next) => {
-	getWeatherFromIP(req, res, next);
+	getWeatherData(req, res, next);
 })
 
-
-
-
-router.post("/", function(req, res, next) {
-	var lat = req.body.lat;
-	var lon = req.body.lon;
-	var weatherURL = 'https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/';
-	
-	var req = https.get(weatherURL + lat + ',' + lon, function(response) {
-		var body = '';
-		response.on('data', function(chunk) {
-			body += chunk;
-		})
-		response.on('end', function() {
-			if(response.statusCode === 200) {
-				res.json(body);
-			} else {
-				res.sendStatus(response.statusCode);
-			}
-		}).on("error", function(err) {
-			return next(err);
-		})
-			
-	}) 
-
+router.post("/search", (req, res, next) => {
+	getWeatherData(req, res, next);
 })
+
 
 module.exports = router;
