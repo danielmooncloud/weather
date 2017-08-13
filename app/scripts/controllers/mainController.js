@@ -2,9 +2,7 @@
 
 const MainController = ($scope, weatherService) => {
 	
-	const zipCode = search => typeof parseInt(search) === 'number' && search.length === 5;		
-	
-		
+					
 	const displayWeather = response => {
 		if(response.status === 200) {
 			$scope.city = response.data.city;
@@ -12,21 +10,27 @@ const MainController = ($scope, weatherService) => {
 			$scope.current = response.data.currently;
 			$scope.daily = response.data.daily.data;
 			$scope.hourly = response.data.hourly.data;
-		} else {
-			console.log("There was an error getting the weather Data for this location")
-		}
+			$scope.error = "";
+		} 
+	}
+
+	const handleError = error => {
+		$scope.error = error.data.err.message;
 	}
 
 	$scope.enter = e => {
 		if(e.which === 13) {
+			//remove spaces from the search value
 			const search = $scope.search.split(' ').join('');
-			const location = zipCode(search) ? `components=postal_code:${search}` : `address=${search}&components=country:US`;
-			weatherService.getWeatherFromSearch(location, displayWeather);
+			//Is the search value a zipcode?
+			const location = parseInt(search) && search.length === 5 ? 
+				`components=postal_code:${search}` : 
+				`address=${search}&components=country:US`
+			weatherService.getWeatherFromSearch(location, displayWeather, handleError);
 		}
 	}
 
-	weatherService.getWeatherFromIP(displayWeather);
-	
+	weatherService.getWeatherFromIP(displayWeather, handleError);
 }
 
 export default MainController;

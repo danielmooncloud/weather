@@ -1,10 +1,9 @@
 'use strict';
 
 
-var express = require('express');
-var https = require('https');
-
-var router = express.Router();
+const express = require('express');
+const https = require('https');
+const router = express.Router();
 
 
 //HELPER FUNCTIONS
@@ -21,10 +20,14 @@ const getData = (url) =>
 						body = JSON.parse(body);
 						resolve(body);
 					} else {
-						reject(response.statusCode);
+						const err = new Error("Location Not Found.");
+						err.status = response.statusCode;
+						reject(err);
 					}
 				})
-		}).on("error", reject)
+		}).on("error", err => {
+			reject(err);
+		})
 	);
 
 
@@ -46,15 +49,13 @@ const getWeatherFromIP = async (req, res, next) => {
 
 //Gets weather Data based on search query
 const getWeatherFromSearch = async (req, res, next) => {
-	console.log(req.body.location);
 	try {
 		let locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?${req.body.location}&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I`);
-		let lat = locationData.results[0].geometry.location.lat;
-		let lon = locationData.results[0].geometry.location.lng;
+		let {lat, lng} = locationData.results[0].geometry.location;
 
 		//Get City and State based on Lat/Lon
-		locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I`);
-		let weatherData = await getData(`https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/${lat},${lon}`);
+		locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I`);
+		let weatherData = await getData(`https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/${lat},${lng}`);
 		res.send({
 			city: locationData.results[0].address_components[2].long_name,
 			state: locationData.results[0].address_components[4].long_name,

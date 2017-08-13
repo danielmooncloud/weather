@@ -1,17 +1,17 @@
 'use strict';
 
 
-var express = require('express');
-var https = require('https');
-var port = process.env.PORT || 4000;
-var jsonParser = require('body-parser').json;
-var logger = require('morgan');
-var routes = require('./routes/routes');
-var favicon = require('serve-favicon');
-var urlString = 'https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/';
+const express = require('express');
+const https = require('https');
+const port = process.env.PORT || 4000;
+const jsonParser = require('body-parser').json;
+const logger = require('morgan');
+const routes = require('./routes/routes');
+const favicon = require('serve-favicon');
+const urlString = 'https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/';
 
 
-var app = express();
+const app = express();
 
 app.use(logger("dev"));
 app.use(jsonParser());
@@ -26,23 +26,19 @@ app.use('/api', routes);
 
 
 //catch 404 and forward to error handler
-app.use(function(req, res, next) {
-	var err = new Error('Not Found!');
+app.use((req, res, next) => {
+	const err = new Error('Not Found!');
 	err.status = 404;
 	next(err);
 }) 
 
 //Error Handler 
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
 	res.status(err.status || 500);
-	res.json({
-		err: {
-			message: err.message
-		}
-	})
+	res.json({err: {message: err.message}});
 }) 
 
-app.listen(port, function() {
+app.listen(port, () => {
 	console.log('the server is running on port ' + port);
 })  
 

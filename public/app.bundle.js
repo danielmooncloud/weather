@@ -48,10 +48,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var MainController = function MainController($scope, weatherService) {
 
-	var zipCode = function zipCode(search) {
-		return typeof parseInt(search) === 'number' && search.length === 5;
-	};
-
 	var displayWeather = function displayWeather(response) {
 		if (response.status === 200) {
 			$scope.city = response.data.city;
@@ -59,20 +55,25 @@ var MainController = function MainController($scope, weatherService) {
 			$scope.current = response.data.currently;
 			$scope.daily = response.data.daily.data;
 			$scope.hourly = response.data.hourly.data;
-		} else {
-			console.log("There was an error getting the weather Data for this location");
+			$scope.error = "";
 		}
+	};
+
+	var handleError = function handleError(error) {
+		$scope.error = error.data.err.message;
 	};
 
 	$scope.enter = function (e) {
 		if (e.which === 13) {
+			//remove spaces from the search value
 			var search = $scope.search.split(' ').join('');
-			var location = zipCode(search) ? 'components=postal_code:' + search : 'address=' + search + '&components=country:US';
-			weatherService.getWeatherFromSearch(location, displayWeather);
+			//Is the search value a zipcode?
+			var location = parseInt(search) && search.length === 5 ? 'components=postal_code:' + search : 'address=' + search + '&components=country:US';
+			weatherService.getWeatherFromSearch(location, displayWeather, handleError);
 		}
 	};
 
-	weatherService.getWeatherFromIP(displayWeather);
+	weatherService.getWeatherFromIP(displayWeather, handleError);
 };
 
 exports.default = MainController;
@@ -137,12 +138,12 @@ Object.defineProperty(exports, "__esModule", {
 
 function weatherService($http) {
 
-	this.getWeatherFromIP = function (callback) {
-		$http.get("/api/ip").then(callback);
+	this.getWeatherFromIP = function (callback, errorHandler) {
+		return $http.get("/api/ip").then(callback, errorHandler);
 	};
 
-	this.getWeatherFromSearch = function (location, callback) {
-		$http.post("/api/search", { location: location }).then(callback);
+	this.getWeatherFromSearch = function (location, callback, errorHandler) {
+		return $http.post("/api/search", { location: location }).then(callback, errorHandler);
 	};
 }
 
@@ -191,7 +192,7 @@ __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = _angular2.default.module('weatherApp', [_angularRoute2.default, _angularSanitize2.default, "angular-skycons"]).config(["$locationProvider", "$routeProvider", _AppConfig2.default]).service("weatherService", ["$http", _weatherService2.default]).filter("degreeFilter", _degreeFilter2.default).directive("search", _search2.default).controller("MainController", ["$scope", "weatherService", _MainController2.default]);
+var app = _angular2.default.module('weatherApp', [_angularRoute2.default, _angularSanitize2.default, "angular-skycons"]).config(["$locationProvider", "$routeProvider", _AppConfig2.default]).service("weatherService", ["$http", _weatherService2.default]).filter("degreeFilter", _degreeFilter2.default).directive("onKeypress", _search2.default).controller("MainController", ["$scope", "weatherService", _MainController2.default]);
 
 /***/ })
 ],[9]);

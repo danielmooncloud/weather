@@ -13,7 +13,7 @@ const app = angular.module('weatherApp', [ngRoute, ngSanitize, "angular-skycons"
 	.config(["$locationProvider", "$routeProvider", AppConfig])
 	.service("weatherService", ["$http", weatherService])
 	.filter("degreeFilter", degreeFilter)
-	.directive("search", search)
+	.directive("onKeypress", search)
 	.controller("MainController", ["$scope", "weatherService", MainController])
 	
 

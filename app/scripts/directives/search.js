@@ -5,8 +5,8 @@ const search = () => {
 		scope: {
 			handler: '&onKeypress'
 		},
-		link: function(scope, element) {
-			element.bind('keypress', function(e) {
+		link(scope, element) {
+			element.bind('keypress', (e) => {
 				scope.handler({$event: e});
 			})
 		}
