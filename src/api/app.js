@@ -8,7 +8,6 @@ const jsonParser = require('body-parser').json;
 const logger = require('morgan');
 const routes = require('./routes/routes');
 const favicon = require('serve-favicon');
-const urlString = 'https://api.darksky.net/forecast/efc9eb6642cbfb5aa7be713b8a9ab9de/';
 
 
 const app = express();
@@ -18,8 +17,6 @@ app.use(jsonParser());
 
 app.use('/', express.static('public'));
 app.use(favicon('./public/images/cloud.png'));
-
-
 
 
 app.use('/api', routes);
