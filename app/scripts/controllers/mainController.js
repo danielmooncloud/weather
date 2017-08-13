@@ -1,16 +1,9 @@
-'use strict';
 
-var angular = require('angular');
 
-angular.module('weatherApp').controller('MainController', function($scope, weatherService) {
+const MainController = ($scope, weatherService) => {
 	
-	const zipCode = (search) => {
-		if(typeof parseInt(search) === 'number' && search.length === 5) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	const zipCode = search => typeof parseInt(search) === 'number' && search.length === 5;		
+	
 		
 	const displayWeather = response => {
 		if(response.status === 200) {
@@ -33,5 +26,7 @@ angular.module('weatherApp').controller('MainController', function($scope, weath
 	}
 
 	weatherService.getWeatherFromIP(displayWeather);
-})
+	
+}
 
+export default MainController;

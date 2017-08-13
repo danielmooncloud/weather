@@ -1,26 +1,52 @@
 		<div class = "panel panel-daily" ng-repeat="day in daily | limitTo: 5" >
-			
 			<div class='info'>
 				 
-				<div class='location'><span><h2>{{city + ', ' + state}}</h2></span></div> 
+				<div class='location'>
+					<span>
+						<h2>{{city + ', ' + state}}</h2>
+					</span>
+				</div> 
 
-				<div class='date'>{{ day.time * 1000 | date:"EEEE"}}<br>{{ day.time * 1000 | date:"longDate"}}</div>
+				<div class='date'>
+					{{ day.time * 1000 | date:"EEEE"}}<br>
+					{{ day.time * 1000 | date:"longDate"}}
+				</div>
 
 			</div>
 
 
-			<div class="icon info"><skycon class="skycon" icon="day.icon" size="iconSize.big" color="color"></skycon></div>
+			<div class="icon info">
+				<skycon class="skycon" icon="day.icon" size="200" color="'#83a1d1'"></skycon>
+			</div>
 
 			<div class = 'info'>
-				<div class='fahrenheit' ng-click="convert = !convert" ng-show="!convert"><h3>High: {{day.temperatureMax | number:0}}<ng-bind-html ng-bind-html="degree"></ng-bind-html>F</h3></div>
+				<div class='fahrenheit' ng-click="convert = !convert" ng-show="!convert">
+					<h3>High: {{day.temperatureMax | number:0}}
+						<ng-bind-html ng-bind-html="'&#176;'"></ng-bind-html>F
+					</h3>
+				</div>
 				
-				<div class='celsius' ng-click="convert = !convert" ng-show="convert"><h3>High: {{day.temperatureMax | toCelsius | number: 0 }}<ng-bind-html ng-bind-html="degree"></ng-bind-html>C</h3></div>
+				<div class='celsius' ng-click="convert = !convert" ng-show="convert">
+					<h3>High: {{day.temperatureMax | degreeFilter | number: 0 }}
+						<ng-bind-html ng-bind-html="'&#176;'"></ng-bind-html>C
+					</h3>
+				</div>
 				
-				<div class='fahrenheit' ng-click="convert = !convert" ng-show="!convert"><h3>Low: {{day.temperatureMin | number:0}}<ng-bind-html ng-bind-html="degree"></ng-bind-html>F</h3></div>
+				<div class='fahrenheit' ng-click="convert = !convert" ng-show="!convert">
+					<h3>Low: {{day.temperatureMin | number:0}}
+						<ng-bind-html ng-bind-html="'&#176;'"></ng-bind-html>F
+					</h3>
+				</div>
 				 
-				<div class='celsius' ng-click="convert = !convert" ng-show="convert"><h3>Low: {{day.temperatureMin | toCelsius | number: 0 }}<ng-bind-html ng-bind-html="degree"></ng-bind-html>C</h3></div> 
+				<div class='celsius' ng-click="convert = !convert" ng-show="convert">
+					<h3>Low: {{day.temperatureMin | degreeFilter | number: 0 }}
+						<ng-bind-html ng-bind-html="'&#176;'"></ng-bind-html>C
+					</h3>
+				</div> 
 
-				<div class='description'><h2>{{day.summary}}</h2></div>
+				<div class='description'>
+					<h2>{{day.summary}}</h2>
+				</div>
 
 			</div>	
 			

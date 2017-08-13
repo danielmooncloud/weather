@@ -1,17 +1,17 @@
-'use strict';
 
-var angular = require('angular');
 
-angular.module('weatherApp').service('weatherService', function($http) {
+function weatherService($http) {
 
-	this.getWeatherFromIP = (callback) =>
+	this.getWeatherFromIP = (callback) => {
 		$http.get("/api/ip").then(callback);
+	}
 
 	this.getWeatherFromSearch = (location, callback) => {
-		$http.post("/api/search", {location})
-			.then(callback)
+		$http.post("/api/search", {location}).then(callback);
 	}
-})
+}
+
+export default weatherService;
 
 
 

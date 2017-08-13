@@ -1,8 +1,6 @@
-'use strict';
 
-var angular = require('angular');
 
-angular.module('weatherApp').directive('onKeypress', function() {
+const search = () => {
 	return {
 		scope: {
 			handler: '&onKeypress'
@@ -13,4 +11,7 @@ angular.module('weatherApp').directive('onKeypress', function() {
 			})
 		}
 	}
-})
+};
+
+
+export default search;
