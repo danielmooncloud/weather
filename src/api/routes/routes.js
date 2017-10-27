@@ -39,10 +39,7 @@ const getWeatherFromIP = async (req, res, next) => {
 	try {
 		let locationData = await getData("https://ipapi.co/json");
 		let weatherData = await getData(`https://api.darksky.net/forecast/${key2}/${locationData.latitude},${locationData.longitude}`);
-		res.send({
-			...locationData,
-			...weatherData
-		});
+		res.send({ ...locationData,...weatherData });
 	} catch(e) {
 		next(e);
 	}

@@ -5,11 +5,12 @@ const MainController = ($scope, weatherService) => {
 					
 	const displayWeather = response => {
 		if(response.status === 200) {
-			$scope.city = response.data.city;
-			$scope.state = response.data.region;
-			$scope.current = response.data.currently;
-			$scope.daily = response.data.daily.data;
-			$scope.hourly = response.data.hourly.data;
+			const {city, region, currently, daily, hourly} = response.data
+			$scope.city = city;
+			$scope.state = region;
+			$scope.current = currently;
+			$scope.daily = daily.data;
+			$scope.hourly = hourly.data;
 			$scope.error = "";
 		} 
 	}

@@ -21,15 +21,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var AppConfig = function AppConfig($locationProvider, $routeProvider) {
 	$locationProvider.hashPrefix('');
-	$routeProvider.when('/', {
-		templateUrl: 'views/main.html'
-	}).when('/daily', {
-		templateUrl: 'views/daily.html'
-	}).when('/hourly', {
-		templateUrl: 'views/hourly.html'
-	}).otherwise({
-		redirectTo: '/'
-	});
+	$routeProvider.when('/', { templateUrl: 'views/main.html' }).when('/daily', { templateUrl: 'views/daily.html' }).when('/hourly', { templateUrl: 'views/hourly.html' }).otherwise({ redirectTo: '/' });
 };
 
 exports.default = AppConfig;
@@ -50,11 +42,18 @@ var MainController = function MainController($scope, weatherService) {
 
 	var displayWeather = function displayWeather(response) {
 		if (response.status === 200) {
-			$scope.city = response.data.city;
-			$scope.state = response.data.region;
-			$scope.current = response.data.currently;
-			$scope.daily = response.data.daily.data;
-			$scope.hourly = response.data.hourly.data;
+			var _response$data = response.data,
+			    city = _response$data.city,
+			    region = _response$data.region,
+			    currently = _response$data.currently,
+			    daily = _response$data.daily,
+			    hourly = _response$data.hourly;
+
+			$scope.city = city;
+			$scope.state = region;
+			$scope.current = currently;
+			$scope.daily = daily.data;
+			$scope.hourly = hourly.data;
 			$scope.error = "";
 		}
 	};
@@ -86,13 +85,13 @@ exports.default = MainController;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var degreeFilter = function degreeFilter() {
-	return function (number) {
-		return Math.floor(5 / 9 * (number - 32));
-	};
+  return function (number) {
+    return Math.floor(5 / 9 * (number - 32));
+  };
 };
 
 exports.default = degreeFilter;
