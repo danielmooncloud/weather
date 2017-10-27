@@ -11,7 +11,7 @@ const key2 = process.env.DARKSKY_API_KEY;
 //HELPER FUNCTIONS
 
 //Gathers and returns response data
-const getData = (url) =>
+const getData = (url) => {
 	new Promise((resolve, reject) =>
 		https.get(url, response => {
 			let body = "";
@@ -27,8 +27,9 @@ const getData = (url) =>
 						reject(err);
 					}
 				})
-		}).on("error", reject);
+		}).on("error", reject)
 	);
+}
 
 
 
@@ -37,7 +38,7 @@ const getWeatherFromIP = async (req, res, next) => {
 	try {
 		let locationData = await getData("https://ipapi.co/json");
 		let weatherData = await getData(`https://api.darksky.net/forecast/${key2}/${locationData.latitude},${locationData.longitude}`);
-		res.send({ ...locationData,...weatherData });
+		res.send({...locationData, ...weatherData });
 	} catch(e) {
 		next(e);
 	}
