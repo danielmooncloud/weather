@@ -27,9 +27,7 @@ const getData = (url) =>
 						reject(err);
 					}
 				})
-		}).on("error", err => {
-			reject(err);
-		})
+		}).on("error", reject);
 	);
 
 
