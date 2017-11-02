@@ -12,7 +12,7 @@
   "license": "ISC",
   "engines": {
     "node": "8.3.0",
-    "npm": "5.3.0"
+    "npm": "5.5.1"
   },
   "dependencies": {
     "angular": "^1.6.5",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "angular-skycons": "git+https://github.com/projectweekend/angular-skycons.git",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "css-loader": "^0.27.3",
     "exports-loader": "^0.6.4",
     "extract-text-webpack-plugin": "^2.1.2",
