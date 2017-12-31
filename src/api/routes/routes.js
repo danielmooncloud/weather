@@ -4,15 +4,15 @@
 const express = require('express');
 const https = require('https');
 const router = express.Router();
-const key1 = process.env.GOOGLE_API_KEY;
-const key2 = process.env.DARKSKY_API_KEY;
+const key1 = "AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I"//process.env.GOOGLE_API_KEY;
+const key2 = "efc9eb6642cbfb5aa7be713b8a9ab9de"//process.env.DARKSKY_API_KEY;
 
 
 //HELPER FUNCTIONS
 
 //Gathers and returns response data
-const getData = (url) =>
-	new Promise((resolve, reject) =>
+const getData = (url) => {
+	return new Promise((resolve, reject) =>
 		https.get(url, response => {
 			let body = "";
 			response
@@ -29,6 +29,7 @@ const getData = (url) =>
 				})
 		}).on("error", reject)
 	);
+}
 
 
 

@@ -85,13 +85,13 @@ exports.default = MainController;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var degreeFilter = function degreeFilter() {
-  return function (number) {
-    return Math.floor(5 / 9 * (number - 32));
-  };
+	return function (number) {
+		Math.floor(5 / 9 * (number - 32));
+	};
 };
 
 exports.default = degreeFilter;

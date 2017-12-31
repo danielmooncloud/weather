@@ -1,8 +1,7 @@
-@import 'sass/index';
-@import 'base/index';
-@import 'components/index';
-@import 'layout/index';
-@import 'animations/index';
+@import "_variables.scss";
+@import "_mixins.scss";
+@import "_transitions.scss";
+@import "_main.scss";
 
 
 
