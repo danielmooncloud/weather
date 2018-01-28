@@ -9,189 +9,165 @@ webpackJsonp([0],[
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-
-var AppConfig = function AppConfig($locationProvider, $routeProvider) {
+const AppConfig = ($locationProvider, $routeProvider) => {
 	$locationProvider.hashPrefix('');
 	$routeProvider.when('/', { templateUrl: 'views/main.html' }).when('/daily', { templateUrl: 'views/daily.html' }).when('/hourly', { templateUrl: 'views/hourly.html' }).otherwise({ redirectTo: '/' });
 };
 
-exports.default = AppConfig;
+/* harmony default export */ __webpack_exports__["a"] = (AppConfig);
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+const MainController = ($scope, weatherService) => {
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-
-var MainController = function MainController($scope, weatherService) {
-
-	var displayWeather = function displayWeather(response) {
-		if (response.status === 200) {
-			var _response$data = response.data,
-			    city = _response$data.city,
-			    region = _response$data.region,
-			    currently = _response$data.currently,
-			    daily = _response$data.daily,
-			    hourly = _response$data.hourly;
-
-			$scope.city = city;
-			$scope.state = region;
-			$scope.current = currently;
-			$scope.daily = daily.data;
-			$scope.hourly = hourly.data;
-			$scope.error = "";
-		}
+	const handleError = err => {
+		console.log(err);
+		$scope.message = err.data.err.message;
+		$scope.$apply();
 	};
 
-	var handleError = function handleError(error) {
-		$scope.error = error.data.err.message;
+	$scope.clearErrorBox = () => {
+		$scope.message = "";
+		$scope.search = "";
 	};
 
-	$scope.enter = function (e) {
+	const displayWeather = response => {
+		const { city, state, currently, daily, hourly } = response.data;
+		$scope.city = city;
+		$scope.state = state;
+		$scope.current = currently;
+		$scope.daily = daily.data;
+		$scope.hourly = hourly.data;
+		$scope.$apply();
+	};
+
+	$scope.enter = e => {
 		if (e.which === 13) {
 			//remove spaces from the search value
-			var search = $scope.search.split(' ').join('');
+			const search = $scope.search.split(' ').join('');
+			let location;
 			//Is the search value a zipcode?
-			var location = parseInt(search) && search.length === 5 ? 'components=postal_code:' + search : 'address=' + search + '&components=country:US';
-			weatherService.getWeatherFromSearch(location, displayWeather, handleError);
+			if (parseInt(search) && search.length === 5) {
+				location = `components=postal_code:${search}`;
+			} else {
+				location = `address=${search}&components=country:US`;
+			}
+			getWeatherData(location);
 		}
 	};
 
-	weatherService.getWeatherFromIP(displayWeather, handleError);
+	const getWeatherData = (() => {
+		var _ref = _asyncToGenerator(function* (location) {
+			try {
+				const weatherData = yield weatherService.getWeather(location);
+				displayWeather(weatherData);
+			} catch (err) {
+				handleError(err);
+			}
+		});
+
+		return function getWeatherData(_x) {
+			return _ref.apply(this, arguments);
+		};
+	})();
+
+	getWeatherData();
 };
 
-exports.default = MainController;
+/* harmony default export */ __webpack_exports__["a"] = (MainController);
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var degreeFilter = function degreeFilter() {
-	return function (number) {
+const degreeFilter = () => {
+	return number => {
 		Math.floor(5 / 9 * (number - 32));
 	};
 };
 
-exports.default = degreeFilter;
+/* harmony default export */ __webpack_exports__["a"] = (degreeFilter);
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-
-var search = function search() {
+const search = () => {
 	return {
 		scope: {
 			handler: '&onKeypress'
 		},
-		link: function link(scope, element) {
-			element.bind('keypress', function (e) {
+		link(scope, element) {
+			element.bind('keypress', e => {
 				scope.handler({ $event: e });
 			});
 		}
 	};
 };
 
-exports.default = search;
+/* harmony default export */ __webpack_exports__["a"] = (search);
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
 
 
 function weatherService($http) {
 
-	this.getWeatherFromIP = function (callback, errorHandler) {
-		return $http.get("/api/ip").then(callback, errorHandler);
-	};
-
-	this.getWeatherFromSearch = function (location, callback, errorHandler) {
-		return $http.post("/api/search", { location: location }).then(callback, errorHandler);
+	this.getWeather = location => {
+		return location ? $http.post("/api/search", { location }) : $http.get("/api/ip");
 	};
 }
 
-exports.default = weatherService;
+/* harmony default export */ __webpack_exports__["a"] = (weatherService);
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angular__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_route__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_route___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angular_route__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_sanitize__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_sanitize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular_sanitize__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__scripts_config_AppConfig_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_MainController_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_scss__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__scss_application_scss__);
 
 
-var _angular = __webpack_require__(2);
 
-var _angular2 = _interopRequireDefault(_angular);
 
-var _angularRoute = __webpack_require__(0);
 
-var _angularRoute2 = _interopRequireDefault(_angularRoute);
 
-var _angularSanitize = __webpack_require__(1);
 
-var _angularSanitize2 = _interopRequireDefault(_angularSanitize);
 
-var _AppConfig = __webpack_require__(4);
 
-var _AppConfig2 = _interopRequireDefault(_AppConfig);
 
-var _MainController = __webpack_require__(5);
-
-var _MainController2 = _interopRequireDefault(_MainController);
-
-var _weatherService = __webpack_require__(8);
-
-var _weatherService2 = _interopRequireDefault(_weatherService);
-
-var _degreeFilter = __webpack_require__(6);
-
-var _degreeFilter2 = _interopRequireDefault(_degreeFilter);
-
-var _search = __webpack_require__(7);
-
-var _search2 = _interopRequireDefault(_search);
-
-__webpack_require__(3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var app = _angular2.default.module('weatherApp', [_angularRoute2.default, _angularSanitize2.default, "angular-skycons"]).config(["$locationProvider", "$routeProvider", _AppConfig2.default]).service("weatherService", ["$http", _weatherService2.default]).filter("degreeFilter", _degreeFilter2.default).directive("onKeypress", _search2.default).controller("MainController", ["$scope", "weatherService", _MainController2.default]);
+const app = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('weatherApp', [__WEBPACK_IMPORTED_MODULE_1_angular_route___default.a, __WEBPACK_IMPORTED_MODULE_2_angular_sanitize___default.a, "angular-skycons"]).config(["$locationProvider", "$routeProvider", __WEBPACK_IMPORTED_MODULE_3__scripts_config_AppConfig_js__["a" /* default */]]).service("weatherService", ["$http", __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__["a" /* default */]]).filter("degreeFilter", __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__["a" /* default */]).directive("onKeypress", __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__["a" /* default */]).controller("MainController", ["$scope", "weatherService", __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_MainController_js__["a" /* default */]]);
 
 /***/ })
 ],[9]);

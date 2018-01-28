@@ -9,6 +9,26 @@ body {
 	margin: auto;
 	height: 1000px;	
 
+	.error-box {
+	    width: 600px;
+	    height: 80px;
+	    background: black;
+	    border-radius: 5px;
+	    position: fixed;
+	    top: 40%;
+	    left: 50%;
+	    margin-left: -300px;
+	    opacity: .9;
+	    text-align: center;
+
+	    span {
+    	    position: absolute;
+		    top: 5px;
+		    right: 10px;
+		    cursor: pointer;
+	    }
+	}
+    
 	.nav {
 		width: 100%;
 		@include flexbox();

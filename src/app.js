@@ -6,8 +6,12 @@ const https = require('https');
 const port = process.env.PORT || 4000;
 const jsonParser = require('body-parser').json;
 const logger = require('morgan');
-const routes = require('./routes/routes');
 const favicon = require('serve-favicon');
+
+
+const routes = require('./routes/routes');
+
+
 
 
 const app = express();
@@ -31,9 +35,11 @@ app.use((req, res, next) => {
 
 //Error Handler 
 app.use((err, req, res, next) => {
-	res.status(err.status || 500);
-	res.json({err: {message: err.message}});
-}) 
+	console.log(err);
+	res
+		.status(err.status || 500)
+		.send({err: {message: err.message}});
+}); 
 
 app.listen(port, () => {
 	console.log('the server is running on port ' + port);

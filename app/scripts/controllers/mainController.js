@@ -2,36 +2,56 @@
 
 const MainController = ($scope, weatherService) => {
 	
-					
-	const displayWeather = response => {
-		if(response.status === 200) {
-			const {city, region, currently, daily, hourly} = response.data
-			$scope.city = city;
-			$scope.state = region;
-			$scope.current = currently;
-			$scope.daily = daily.data;
-			$scope.hourly = hourly.data;
-			$scope.error = "";
-		} 
+
+	const handleError = (err) => {
+		$scope.message = err.data.err.message;
+		$scope.$apply();
 	}
 
-	const handleError = error => {
-		$scope.error = error.data.err.message;
+	$scope.clearErrorBox = () => {
+		$scope.message = "";
+		$scope.search = "";
 	}
 
-	$scope.enter = e => {
+	const displayWeather = (response) => {
+		const {city, state, currently, daily, hourly} = response.data
+		$scope.city = city;
+		$scope.state = state;
+		$scope.current = currently;
+		$scope.daily = daily.data;
+		$scope.hourly = hourly.data;
+		$scope.$apply();
+	} 
+	
+
+
+	$scope.enter = (e) => {
 		if(e.which === 13) {
 			//remove spaces from the search value
 			const search = $scope.search.split(' ').join('');
+			let location;
 			//Is the search value a zipcode?
-			const location = parseInt(search) && search.length === 5 ? 
-				`components=postal_code:${search}` : 
-				`address=${search}&components=country:US`
-			weatherService.getWeatherFromSearch(location, displayWeather, handleError);
+			if(parseInt(search) && search.length === 5) {
+				location = `components=postal_code:${search}`;
+			} else {
+				location = `address=${search}&components=country:US`;
+			}
+			getWeatherData(location);
 		}
 	}
 
-	weatherService.getWeatherFromIP(displayWeather, handleError);
+	const getWeatherData = async (location) => {
+		try {
+			const weatherData = await weatherService.getWeather(location);
+			displayWeather(weatherData);
+		} catch(err) {
+			handleError(err);
+		}
+	}
+
+	getWeatherData();
+
+	
 }
 
 export default MainController;

@@ -2,14 +2,8 @@
 
 function weatherService($http) {
 
-	this.getWeatherFromIP = (callback, errorHandler) => {
-		return $http.get("/api/ip")
-			.then(callback, errorHandler);
-	}
-
-	this.getWeatherFromSearch = (location, callback, errorHandler) => {
-		return $http.post("/api/search", {location})
-			.then(callback, errorHandler);
+	this.getWeather = (location) => {
+		return location ?  $http.post("/api/search", {location}) : $http.get("/api/ip")
 	}
 }
 
