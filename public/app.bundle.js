@@ -14,7 +14,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_sanitize__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_sanitize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular_sanitize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__scripts_config_AppConfig_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_MainController_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_mainController_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__ = __webpack_require__(11);
@@ -30,7 +30,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module("weatherApp", [__WEBPACK_IMPORTED_MODULE_1_angular_route___default.a, __WEBPACK_IMPORTED_MODULE_2_angular_sanitize___default.a, "angular-skycons"]).config(["$locationProvider", "$routeProvider", __WEBPACK_IMPORTED_MODULE_3__scripts_config_AppConfig_js__["a" /* default */]]).service("weatherService", ["$http", __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__["a" /* default */]]).filter("degreeFilter", __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__["a" /* default */]).directive("onKeypress", __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__["a" /* default */]).controller("MainController", ["$scope", "weatherService", __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_MainController_js__["a" /* default */]]);
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module("weatherApp", [__WEBPACK_IMPORTED_MODULE_1_angular_route___default.a, __WEBPACK_IMPORTED_MODULE_2_angular_sanitize___default.a, "angular-skycons"]).config(["$locationProvider", "$routeProvider", __WEBPACK_IMPORTED_MODULE_3__scripts_config_AppConfig_js__["a" /* default */]]).service("weatherService", ["$http", __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__["a" /* default */]]).filter("degreeFilter", __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__["a" /* default */]).directive("onKeypress", __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__["a" /* default */]).controller("MainController", ["$scope", "weatherService", __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_mainController_js__["a" /* default */]]);
 
 /***/ }),
 /* 4 */,
