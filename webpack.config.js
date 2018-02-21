@@ -25,10 +25,10 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: "/node_modules/",
-                loader: ["babel-loader"]
+                loader: ["babel-loader","eslint-loader"]
             },
             {
-                test: /\.png$/,
+                test: /\.(png|jpg)$/,
                 loader: "file-loader?outputPath=images/"
             }
         ]

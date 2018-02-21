@@ -3,14 +3,14 @@
 const search = () => {
 	return {
 		scope: {
-			handler: '&onKeypress'
+			handler: "&onKeypress"
 		},
 		link(scope, element) {
-			element.bind('keypress', (e) => {
+			element.bind("keypress", (e) => {
 				scope.handler({$event: e});
-			})
+			});
 		}
-	}
+	};
 };
 
 

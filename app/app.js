@@ -9,12 +9,12 @@ import search from "./scripts/directives/search.js";
 import "./scss/application.scss";
 
 
-const app = angular.module('weatherApp', [ngRoute, ngSanitize, "angular-skycons"])
+angular.module("weatherApp", [ngRoute, ngSanitize, "angular-skycons"])
 	.config(["$locationProvider", "$routeProvider", AppConfig])
 	.service("weatherService", ["$http", weatherService])
 	.filter("degreeFilter", degreeFilter)
 	.directive("onKeypress", search)
-	.controller("MainController", ["$scope", "weatherService", MainController])
+	.controller("MainController", ["$scope", "weatherService", MainController]);
 	
 
 
