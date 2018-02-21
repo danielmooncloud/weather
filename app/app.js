@@ -2,7 +2,7 @@ import angular from "angular";
 import ngRoute from "angular-route";
 import ngSanitize from "angular-sanitize";
 import AppConfig from "./scripts/config/AppConfig.js";
-import MainController from "./scripts/controllers/MainController.js";
+import MainController from "./scripts/controllers/mainController.js";
 import weatherService from "./scripts/services/weatherService.js";
 import degreeFilter from "./scripts/directives/degreeFilter.js";
 import search from "./scripts/directives/search.js";
