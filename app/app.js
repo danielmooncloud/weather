@@ -6,7 +6,8 @@ import MainController from "./scripts/controllers/mainController.js";
 import weatherService from "./scripts/services/weatherService.js";
 import degreeFilter from "./scripts/directives/degreeFilter.js";
 import search from "./scripts/directives/search.js";
-import "./scss/application.scss";
+import "./scss/application.crit.scss";
+import "./scss/application.med.scss";
 
 
 angular.module("weatherApp", [ngRoute, ngSanitize, "angular-skycons"])

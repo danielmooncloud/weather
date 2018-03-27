@@ -1,7 +1,7 @@
 
 const degreeFilter = () => {
 	return (number) => {
-		Math.floor((5/9) * (number - 32));
+		return Math.floor((5/9) * (number - 32));
 	};
 };
 

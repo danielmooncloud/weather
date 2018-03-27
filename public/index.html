@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 	<head>
 		<meta charset='UTF-8'>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#36365c"/>
 		<title>Weather</title>
-		<link rel="stylesheet" type="text/css" href="/app.css">
+		<link rel="manifest" href="manifest.json">
+		<link rel="icon" href="/css/images/cloud.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css">
+		<link rel="stylesheet" type="text/css" href="/css/media.css">
 		
 	</head>
 	<body ng-app="weatherApp" ng-controller="MainController">
@@ -15,25 +18,24 @@
 		</div>
 		<div class="nav nav-bar">
 			<div class="menu">        	
-            	<ul>
-            		<li><a href="#/"><h3>TODAY</h3></a></li>
-            		<li><a href="#/daily"><h3>DAILY</h3></a></li>
-            		<li><a href="#/hourly"><h3>HOURLY</h3></a></li>    	
-      	     	</ul> 
+            	<div class="nav-buttons">
+            		<div class="nav-button"><a href="#/"><h3>TODAY</h3></a></div>
+            		<div class="nav-button"><a href="#/daily"><h3>DAILY</h3></a></div>
+            		<div class="nav-button"><a href="#/hourly"><h3>HOURLY</h3></a></div>    	
+				</div> 
             </div>
-			<div class="inputdiv">				
+			<div class="inputdiv">
+				<label for="search">Search Your Area</label>			
                 <input type="text" id="search" ng-model="search" on-Keypress="enter($event)" placeholder="CITY or ZIP"></input>                                  
             </div>
 		</div>		
-		<div class='main'>
+		<div class="main">
 			<ng-view class='view'></ng-view>
 		</div>
-
-		<script src="/vendor.bundle.js"></script>
-		<script src="/angular-skycons.min.js"></script>
-		<script src="/app.bundle.js"></script>
 		
-
+		<script src="/scripts/vendor.bundle.js"></script>
+		<script src="/scripts/angular-skycons.min.js"></script>
+		<script src="/scripts/app.bundle.js"></script>
+		
 	</body>
-
 </html>

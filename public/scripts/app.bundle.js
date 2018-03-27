@@ -18,8 +18,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_scss__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__scss_application_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_crit_scss__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_crit_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__scss_application_crit_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__scss_application_med_scss__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__scss_application_med_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__scss_application_med_scss__);
+
 
 
 
@@ -137,7 +140,7 @@ function weatherService($http) {
 
 const degreeFilter = () => {
 	return number => {
-		Math.floor(5 / 9 * (number - 32));
+		return Math.floor(5 / 9 * (number - 32));
 	};
 };
 
@@ -167,6 +170,12 @@ const search = () => {
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

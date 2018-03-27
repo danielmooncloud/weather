@@ -1,0 +1,94 @@
+/* color variables */
+
+/* paths */
+
+/* font stacks */
+
+/* media queries */
+
+.menu .nav-button {
+  -webkit-transition: 0.5s background-color ease-in-out;
+  transition: 0.5s background-color ease-in-out;
+}
+
+.menu .nav-button:hover {
+  background-color: grey;
+}
+
+@media (min-width: 992px) {
+  body .nav {
+    flex-direction: row;
+  }
+
+  body .nav .menu {
+    width: 50%;
+  }
+
+  body .nav .menu div.nav-buttons {
+    flex-direction: row;
+  }
+
+  body .nav .menu div.nav-buttons .nav-button {
+    border-bottom: 0 !important;
+  }
+
+  body .nav .inputdiv {
+    width: 50%;
+    padding: 10px;
+  }
+
+  body .main {
+    padding: 20px;
+  }
+
+  body .main .view {
+    margin-top: 50px;
+    display: flex;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+
+  body .main .view .panel {
+    min-height: 500px;
+    max-height: 500px;
+  }
+
+  body .main .view .panel .panel-header {
+    padding-bottom: 30px;
+  }
+
+  body .main .view .panel-daily,
+  body .main .view .panel-hourly {
+    background: rgba(28, 23, 23, 0.7);
+    box-shadow: none;
+    width: 150px;
+  }
+
+  body .main .view .panel-daily .panel-header,
+  body .main .view .panel-hourly .panel-header {
+    max-height: 30px;
+  }
+
+  body .main .view .panel-daily .content-row,
+  body .main .view .panel-hourly .content-row {
+    flex-direction: column;
+    box-shadow: none;
+    padding-top: 20px;
+    flex: 2 0;
+  }
+
+  body .main .view .panel-daily .content-row .info-column,
+  body .main .view .panel-hourly .content-row .info-column {
+    margin-top: 20px;
+  }
+
+  body .main .view .panel-daily .content-row .info-column .skycon,
+  body .main .view .panel-hourly .content-row .info-column .skycon {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}

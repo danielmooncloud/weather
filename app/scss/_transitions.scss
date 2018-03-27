@@ -1,4 +1,4 @@
-.menu li {
+.menu .nav-button {
 	@include transition(.5s, background-color);
 	&:hover {
 		background-color: $grey;

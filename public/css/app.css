@@ -1,0 +1,230 @@
+/* color variables */
+
+/* paths */
+
+/* font stacks */
+
+/* media queries */
+
+.menu .nav-button {
+  -webkit-transition: 0.5s background-color ease-in-out;
+  transition: 0.5s background-color ease-in-out;
+}
+
+.menu .nav-button:hover {
+  background-color: grey;
+}
+
+@font-face {
+  font-family: "Oxygen";
+  src: url("/fonts/Oxygen-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background: #36365c;
+  font-family: 'Oxygen';
+  color: #fff;
+  width: 100%;
+  margin: auto;
+}
+
+body .error-box {
+  width: 600px;
+  height: 80px;
+  background: black;
+  border-radius: 5px;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  margin-left: -300px;
+  opacity: .9;
+  text-align: center;
+}
+
+body .error-box span {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+body .nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #010101;
+}
+
+body .nav .menu div.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  line-height: 70px;
+}
+
+body .nav .menu div.nav-buttons div.nav-button {
+  height: 70px;
+  padding-top: 0;
+  text-align: center;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0;
+  flex: 1 0;
+  border-bottom: 3px solid white;
+}
+
+body .nav .menu div.nav-buttons div.nav-button:hover {
+  background: #884e4e;
+}
+
+body .nav .menu div.nav-buttons div.nav-button a {
+  text-decoration: none;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+body .nav .menu div.nav-buttons div.nav-button a h3 {
+  margin: 0;
+}
+
+body .nav .inputdiv {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+body .nav .inputdiv label {
+  color: black;
+  height: 0;
+}
+
+body .nav .inputdiv input {
+  margin: auto;
+  font-size: 16px;
+  border-radius: 2%;
+  border: 3px solid grey;
+  height: 30px;
+  width: 200px;
+  padding-left: 10px;
+}
+
+body .nav .inputdiv input:focus {
+  outline: none;
+}
+
+body .main {
+  margin: auto;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  height: 100%;
+}
+
+body .main .view {
+  width: 100%;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0;
+  flex: 1 0;
+  height: 100%;
+}
+
+body .main .view .panel {
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 50px auto 50px;
+  width: 250px;
+  height: 60%;
+  padding: 1%;
+  text-align: center;
+  background-color: rgba(28, 23, 23, 0.7);
+  border-radius: 0;
+}
+
+body .main .view .panel .info {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0;
+  flex: 1 0;
+}
+
+body .main .view .panel .info .location,
+body .main .view .panel .info .fahrenheit,
+body .main .view .panel .info .celsius,
+body .main .view .panel .info .description,
+body .main .view .panel .info .date {
+  text-shadow: 1px 1px black;
+  overflow: hidden;
+}
+
+body .main .view .panel-daily,
+body .main .view .panel-hourly {
+  width: 95% !important;
+  margin: 50px auto 0;
+}
+
+body .main .view .panel-daily .content-row,
+body .main .view .panel-hourly .content-row {
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+body .main .view .panel-daily .content-row .icon-column,
+body .main .view .panel-hourly .content-row .icon-column {
+  flex: 1 0;
+}
+
+body .main .view .panel-daily .content-row .info-column,
+body .main .view .panel-hourly .content-row .info-column {
+  flex: 1 0;
+  display: flex;
+  align-items: center;
+}
+
+body .main .view .panel-daily .content-row .info-column .info .fahrenheit h1,
+body .main .view .panel-daily .content-row .info-column .info .celsius h1,
+body .main .view .panel-hourly .content-row .info-column .info .fahrenheit h1,
+body .main .view .panel-hourly .content-row .info-column .info .celsius h1 {
+  margin: 0;
+}
+
+body .main .view .panel-daily .content-row .info-column .skycon,
+body .main .view .panel-hourly .content-row .info-column .skycon {
+  width: 200px;
+  height: 200px;
+}
+
+body .main .view .panel-daily .description-row,
+body .main .view .panel-hourly .description-row {
+  margin-top: 0;
+}
+
+body .main .view .panel-daily .daily-location,
+body .main .view .panel-hourly .daily-location {
+  margin-bottom: 0;
+}

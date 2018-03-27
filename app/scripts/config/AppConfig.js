@@ -9,4 +9,5 @@ const AppConfig = ($locationProvider, $routeProvider) => {
 		.otherwise({ redirectTo: "/"});
 };
 
+
 export default AppConfig;

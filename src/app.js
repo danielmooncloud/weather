@@ -1,29 +1,49 @@
 'use strict';
+//import native packages
+const fs = require("fs");
+const path = require("path");
 
-//require("newrelic");
+
+//import non-native packages
 const express = require('express');
-const https = require('https');
-const port = process.env.PORT || 4000;
 const jsonParser = require('body-parser').json;
 const logger = require('morgan');
 const favicon = require('serve-favicon');
+const spdy = require("spdy");
 
 
+
+//import files
 const routes = require('./routes/routes');
+const serveCompressed = require('./scripts/compression.js');
+const pushAssets = require("./scripts/serverPush.js");
+const ensureSecure = require("./routes/ensureSecure.js");
 
-
-
-
+//declare variables
+const port = process.env.PORT || 4000;
 const app = express();
+const http = express();
+
 
 app.use(logger("dev"));
 app.use(jsonParser());
 
-app.use('/', express.static('public'));
-app.use(favicon('./public/images/cloud.png'));
+//Redirect traffic to secure connection
+//http.all("*", ensureSecure(port));
+app.use(favicon("./public/css/images/cloud.ico"));
+//run js and css file requests through compression middleware
+app.get('*bundle.js', serveCompressed('text/javascript'))
+app.get('*.css', serveCompressed('text/css')) 
+
 
 
 app.use('/api', routes);
+
+//app.get("/", pushAssets);
+
+app.use(express.static("public"));
+
+
 
 
 //catch 404 and forward to error handler
@@ -41,9 +61,22 @@ app.use((err, req, res, next) => {
 		.send({err: {message: err.message}});
 }); 
 
-app.listen(port, () => {
-	console.log('the server is running on port ' + port);
-})  
+
+http.listen(3000)
+// spdy
+// 	.createServer({
+// 		key: fs.readFileSync('encryption/server.key'),
+// 		cert: fs.readFileSync('encryption/server.crt')
+// 	}, app)
+	app.listen(port, err => {
+		if(err) {
+			console.error(error);
+			return process.exit(1);
+		} else {
+			console.log('the server is running on port ' + port);
+		}
+	}); 
+
 
 
 
