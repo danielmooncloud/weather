@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-//var CompressionPlugin = require("compression-webpack-plugin");
 var BrotliPlugin = require('brotli-webpack-plugin');
 var ExtractMediaQueries = new ExtractTextPlugin("css/media.css");
 var ExtractCriticalCSS = new ExtractTextPlugin("css/app.css");
@@ -51,7 +50,6 @@ module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename: "scripts/vendor.bundle.js"}),
         new ExtractTextPlugin("css/[name].css"),
-        //new CompressionPlugin(),
         new BrotliPlugin(),
         ExtractMediaQueries,
         ExtractCriticalCSS

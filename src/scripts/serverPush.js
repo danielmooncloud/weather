@@ -19,15 +19,17 @@ const dependencyTree = {
     }
 }
 
-const getIndex = (res, staticDir) => async cb => {
-	try {
-        const filepath = staticDir + "/" + "index.html";
-        const data = await readFile(filepath, 'utf8')
-		res.write(data);
-		cb();
-	} catch(err) {
-		cb(err);
-	}
+const getIndex = (res, staticDir) => {
+    return async cb => {
+        try {
+            const filepath = staticDir + "/" + "index.html";
+            const data = await readFile(filepath, 'utf8')
+            res.write(data);
+            cb();
+        } catch(err) {
+            cb(err);
+        }
+    }
 }
 
 
@@ -44,7 +46,6 @@ const getFiles = (res, config) => {
                 }).end(data);
                 cb();
             } catch(err) {
-                console.log("getFiles")
                 cb(err);
             }
         }
@@ -64,7 +65,6 @@ const getDependencyMap = config => {
             ];
             parallel(assets, (err, results) => {
                 if(err) {
-                    console.log("parallel")
                     next(err);
                 }
                 res.end();
