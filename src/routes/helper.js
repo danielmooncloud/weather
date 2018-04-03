@@ -1,6 +1,6 @@
 const https = require('https');
-const key1 = "AIzaSyBq5sH5ZGsj21YvMM8i1G0d_ZcGds7Ll4I"//process.env.GOOGLE_API_KEY;
-const key2 = "efc9eb6642cbfb5aa7be713b8a9ab9de"//process.env.DARKSKY_API_KEY;
+const key1 = process.env.GOOGLE_API_KEY;
+const key2 = process.env.DARKSKY_API_KEY;
 
 
 
