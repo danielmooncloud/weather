@@ -16,7 +16,7 @@ const MainController = ($scope, weatherService) => {
 
 
 	const displayWeather = (response) => {
-		const {city, state, currently, daily, hourly} = response.data;
+		const { city, state, currently, daily, hourly } = response.data;
 		$scope.city = city;
 		$scope.state = state;
 		$scope.current = currently;
@@ -26,32 +26,41 @@ const MainController = ($scope, weatherService) => {
 	}; 
 	
 
-	$scope.enter = (e) => {
+	$scope.search = (e) => {
 		if(e.which === 13) {
 			//remove spaces from the search value
-			const search = $scope.search.split(" ").join("");
+			const query = $scope.query.split(" ").join("");
 			let location;
 			//Is the search value a zipcode?
-			if(parseInt(search) && search.length === 5) {
-				location = `components=postal_code:${search}`;
+			if(parseInt(query) && query.length === 5) {
+				location = `components=postal_code:${query}`;
 			} else {
-				location = `address=${search}&components=country:US`;
+				location = `address=${query}&components=country:US`;
 			}
 			getWeatherData(location);
 		}
 	};
 
-
-	const getWeatherData = async(location) => {
+	const getCurrentLocationData = async () => {
 		try {
-			const weatherData = await weatherService.getWeather(location);
+			const weatherData = await weatherService.getCurrentWeather("/api/current");
+			displayWeather(weatherData);
+		} catch(err) {
+			handleError(err);
+		}
+	}
+
+
+	const getWeatherData = async (location) => {
+		try {
+			const weatherData = await weatherService.getWeather("api/search", location);
 			displayWeather(weatherData);
 		} catch(err) {
 			handleError(err);
 		}
 	};
 
-	getWeatherData();
+	getCurrentLocationData();
 
 	
 };

@@ -36,14 +36,11 @@ app.get('*bundle.js', serveCompressed('text/javascript'))
 app.get('*.css', serveCompressed('text/css')) 
 
 
-
 app.use('/api', routes);
 
 app.get("/", pushAssets);
 
 app.use(express.static("public"));
-
-
 
 
 //catch 404 and forward to error handler

@@ -81,25 +81,40 @@ const MainController = ($scope, weatherService) => {
 		$scope.$apply();
 	};
 
-	$scope.enter = e => {
+	$scope.search = e => {
 		if (e.which === 13) {
 			//remove spaces from the search value
-			const search = $scope.search.split(" ").join("");
+			const query = $scope.query.split(" ").join("");
 			let location;
 			//Is the search value a zipcode?
-			if (parseInt(search) && search.length === 5) {
-				location = `components=postal_code:${search}`;
+			if (parseInt(query) && query.length === 5) {
+				location = `components=postal_code:${query}`;
 			} else {
-				location = `address=${search}&components=country:US`;
+				location = `address=${query}&components=country:US`;
 			}
 			getWeatherData(location);
 		}
 	};
 
-	const getWeatherData = (() => {
-		var _ref = _asyncToGenerator(function* (location) {
+	const getCurrentLocationData = (() => {
+		var _ref = _asyncToGenerator(function* () {
 			try {
-				const weatherData = yield weatherService.getWeather(location);
+				const weatherData = yield weatherService.getCurrentWeather("/api/current");
+				displayWeather(weatherData);
+			} catch (err) {
+				handleError(err);
+			}
+		});
+
+		return function getCurrentLocationData() {
+			return _ref.apply(this, arguments);
+		};
+	})();
+
+	const getWeatherData = (() => {
+		var _ref2 = _asyncToGenerator(function* (location) {
+			try {
+				const weatherData = yield weatherService.getWeather("api/search", location);
 				displayWeather(weatherData);
 			} catch (err) {
 				handleError(err);
@@ -107,11 +122,11 @@ const MainController = ($scope, weatherService) => {
 		});
 
 		return function getWeatherData(_x) {
-			return _ref.apply(this, arguments);
+			return _ref2.apply(this, arguments);
 		};
 	})();
 
-	getWeatherData();
+	getCurrentLocationData();
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (MainController);
@@ -125,8 +140,17 @@ const MainController = ($scope, weatherService) => {
 
 function weatherService($http) {
 
-	this.getWeather = location => {
-		return location ? $http.post("/api/search", { location }) : $http.get("/api/ip");
+	this.getWeather = (url, location) => {
+		return $http.post(url, { location });
+	};
+
+	this.getCurrentWeather = url => {
+		return new Promise(resolve => {
+			navigator.geolocation.getCurrentPosition(position => {
+				let { latitude, longitude } = position.coords;
+				resolve($http.post(url, { latitude, longitude }));
+			});
+		});
 	};
 }
 
