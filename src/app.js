@@ -55,11 +55,7 @@ app.use((req, res, next) => {
 
 //Error Handler 
 app.use((err, req, res, next) => {
-<<<<<<< HEAD
-	return res
-=======
 	res
->>>>>>> geolocation
 		.status(err.status || 500)
 		.json(err.message);
 }); 
