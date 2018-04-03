@@ -28,13 +28,15 @@ const http = express();
 app.use(logger("dev"));
 app.use(jsonParser());
 
+
 //Redirect traffic to secure connection
 http.all("*", ensureSecure(port));
 app.use(favicon("./public/css/images/cloud.ico"));
+
+
 //run js and css file requests through compression middleware
 app.get('*bundle.js', serveCompressed('text/javascript'))
 app.get('*.css', serveCompressed('text/css')) 
-
 
 
 app.use('/api', routes);
@@ -44,21 +46,19 @@ app.get("/", pushAssets);
 app.use(express.static("public"));
 
 
-
-
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
 	const err = new Error('Not Found!');
 	err.status = 404;
-	next(err);
+	return next(err);
 }) 
+
 
 //Error Handler 
 app.use((err, req, res, next) => {
-	console.log(err);
-	res
+	return res
 		.status(err.status || 500)
-		.send({err: {message: err.message}});
+		.json(err.message);
 }); 
 
 

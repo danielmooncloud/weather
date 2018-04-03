@@ -61,11 +61,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 const MainController = ($scope, weatherService) => {
 
-	const handleError = err => {
-		$scope.message = err.data.err.message;
-		$scope.$apply();
-	};
-
 	$scope.clearErrorBox = () => {
 		$scope.message = "";
 		$scope.search = "";
@@ -102,7 +97,8 @@ const MainController = ($scope, weatherService) => {
 				const weatherData = yield weatherService.getWeather(location);
 				displayWeather(weatherData);
 			} catch (err) {
-				handleError(err);
+				$scope.message = err.data;
+				$scope.$apply();
 			}
 		});
 

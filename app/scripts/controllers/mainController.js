@@ -3,12 +3,6 @@
 const MainController = ($scope, weatherService) => {
 	
 
-	const handleError = (err) => {
-		$scope.message = err.data.err.message;
-		$scope.$apply();
-	};
-
-
 	$scope.clearErrorBox = () => {
 		$scope.message = "";
 		$scope.search = "";
@@ -42,12 +36,13 @@ const MainController = ($scope, weatherService) => {
 	};
 
 
-	const getWeatherData = async(location) => {
+	const getWeatherData = async (location) => {
 		try {
 			const weatherData = await weatherService.getWeather(location);
 			displayWeather(weatherData);
 		} catch(err) {
-			handleError(err);
+			$scope.message = err.data;
+			$scope.$apply();
 		}
 	};
 

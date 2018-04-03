@@ -21,11 +21,7 @@ const getData = (url) => {
 						reject(err);
 					}
 				})
-		}).on("error", (error) => {
-			const err = new Error("Oops! Something went wrong.");
-			err.status = 500;
-			reject(err);
-		})
+		}).on("error", reject)
 	);
 }
 
@@ -51,14 +47,15 @@ const getWeatherFromSearch = async (req, res, next) => {
 			//Get City and State based on Lat/Lon
 			locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key1}`);
 			let weatherData = await getData(`https://api.darksky.net/forecast/${key2}/${lat},${lng}`);
-			
 			res.send({
 				city: locationData.results[0].address_components[3].long_name,
 				state: locationData.results[0].address_components[5].long_name,
 				...weatherData
 			});
 		} else {
-			throw new Error("Invalid Location.");
+			const err = new Error("Invalid Location.");
+			err.status = 404;
+			next(err);
 		}
 	} catch(err) {
 		next(err);

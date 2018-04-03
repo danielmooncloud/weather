@@ -10,7 +10,7 @@
         "type": "image/png"
       },
       {  
-        "src": "/images/cloud-512x512.png",  
+        "src": "/css/images/cloud-512x512.png",  
         "sizes": "512x512",  
         "type": "image/png"  
       }
