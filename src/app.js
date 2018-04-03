@@ -40,7 +40,6 @@ app.get('*.css', serveCompressed('text/css'))
 
 
 app.use('/api', routes);
-
 app.get("/", pushAssets);
 
 app.use(express.static("public"));
@@ -56,7 +55,11 @@ app.use((req, res, next) => {
 
 //Error Handler 
 app.use((err, req, res, next) => {
+<<<<<<< HEAD
 	return res
+=======
+	res
+>>>>>>> geolocation
 		.status(err.status || 500)
 		.json(err.message);
 }); 

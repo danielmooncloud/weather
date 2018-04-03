@@ -12,57 +12,64 @@ const getData = (url) => {
 			response
 				.on("data", chunk => body += chunk)
 				.on("end", () => {
-					if(response.statusCode === 200) {
+					try {
 						body = JSON.parse(body);
 						resolve(body);
-					} else {
-						const err = new Error("Oops! Something went wrong.");
-						err.status = response.statusCode;
+					} catch(err) {
 						reject(err);
-					}
+					}	
 				})
 		}).on("error", reject)
-	);
+	)
+}
+
+
+const getWeatherData = async location => {
+	try {
+		const { lat, lng } = location;
+		const locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key1}`);
+		const weatherData = await getData(`https://api.darksky.net/forecast/${key2}/${lat},${lng}`);
+		return {
+			city: locationData.results[0].address_components[3].long_name,
+			state: locationData.results[0].address_components[5].long_name,
+			...weatherData
+		}
+	} catch(err) {
+		throw(err);
+	}
 }
 
 
 //Gets weather data based on IP Address
-const getWeatherFromIP = async (req, res, next) => {
+const getCurrentWeather = async (req, res, next) => {
 	try {
-		let locationData = await getData("https://ipapi.co/json");
-		let weatherData = await getData(`https://api.darksky.net/forecast/${key2}/${locationData.latitude},${locationData.longitude}`);
-		res.send({...locationData, ...weatherData });
+		const weatherData = await getWeatherData(req.body);
+		res.send(weatherData);
 	} catch(err) {
 		next(err);
 	}
 }
+
 
 
 //Gets weather Data based on search query
 const getWeatherFromSearch = async (req, res, next) => {
 	try {
-		let locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?${req.body.location}&key=${key1}`);
-		if(locationData.results[0]) {
-			let {lat, lng} = locationData.results[0].geometry.location;
-			//Get City and State based on Lat/Lon
-			locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key1}`);
-			let weatherData = await getData(`https://api.darksky.net/forecast/${key2}/${lat},${lng}`);
-			res.send({
-				city: locationData.results[0].address_components[3].long_name,
-				state: locationData.results[0].address_components[5].long_name,
-				...weatherData
-			});
-		} else {
-			const err = new Error("Invalid Location.");
-			err.status = 404;
-			next(err);
-		}
+		let location = req.body.location;
+		//Gets coordinates from search query
+		const locationData = await getData(`https://maps.googleapis.com/maps/api/geocode/json?${location}&key=${key1}`);
+		//Checks to make sure location exists
+		location = locationData.results[0].geometry.location;
+		//Get City and State from coords
+		let weatherData = await getWeatherData(location);
+		res.send(weatherData);
 	} catch(err) {
 		next(err);
 	}
 }
 
 
-module.exports = {getWeatherFromIP, getWeatherFromSearch};
+
+module.exports = { getCurrentWeather, getWeatherFromSearch };
 
 
