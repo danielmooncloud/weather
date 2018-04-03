@@ -22,6 +22,10 @@
   font-style: normal;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: #36365c;
   font-family: 'Oxygen';
@@ -30,17 +34,45 @@ body {
   margin: auto;
 }
 
-body .error-box {
-  width: 600px;
-  height: 80px;
-  background: black;
-  border-radius: 5px;
+body .loading {
   position: fixed;
-  top: 40%;
-  left: 50%;
-  margin-left: -300px;
-  opacity: .9;
+  top: 50%;
+  left: 10%;
+  z-index: 20;
+  width: 80%;
+  height: 200px;
+  font-size: 30px;
+  background: black;
+  color: white;
   text-align: center;
+  border-radius: 5px;
+  padding: 70px 20% 0 20%;
+}
+
+body .loading span {
+  margin: auto;
+  text-align: left;
+  width: 150px;
+  display: block;
+}
+
+body .error-box {
+  position: fixed;
+  top: 50%;
+  left: 10%;
+  z-index: 20;
+  width: 80%;
+  height: 200px;
+  background: black;
+  color: white;
+  text-align: left;
+  border-radius: 5px;
+  padding: 20px 20% 0 20%;
+}
+
+body .error-box h2 {
+  text-align: center;
+  font-size: 22px;
 }
 
 body .error-box span {

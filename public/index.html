@@ -16,6 +16,9 @@
 			<h2>{{message}}</h2>
 			<span ng-click="clearErrorBox()">X</span>
 		</div>
+		<div class="loading" ng-show="isLoading">
+			<span>{{ loading }}</span>
+		</div>
 		<div class="nav nav-bar">
 			<div class="menu">        	
             	<div class="nav-buttons">

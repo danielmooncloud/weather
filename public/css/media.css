@@ -16,6 +16,19 @@
 }
 
 @media (min-width: 992px) {
+  body .loading {
+    width: 40%;
+    left: 30%;
+    padding: 70px 0 0 0;
+    top: 40%;
+  }
+
+  body .error-box {
+    width: 40%;
+    left: 30%;
+    padding: 45px 0 0 0;
+  }
+
   body .nav {
     flex-direction: row;
   }
@@ -53,8 +66,8 @@
   }
 
   body .main .view .panel {
-    min-height: 500px;
-    max-height: 500px;
+    min-height: 550px;
+    max-height: 550px;
   }
 
   body .main .view .panel .panel-header {
@@ -90,5 +103,11 @@
   body .main .view .panel-hourly .content-row .info-column .skycon {
     width: 100px !important;
     height: 100px !important;
+  }
+}
+
+@media (min-width: 767px) {
+  body .error-box {
+    padding-top: 45px;
   }
 }

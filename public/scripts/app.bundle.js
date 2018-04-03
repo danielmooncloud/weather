@@ -61,14 +61,34 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 const MainController = ($scope, weatherService) => {
 
+	const startLoader = () => {
+		let i = 0;
+		$scope.isLoading = true;
+		$scope.loadingInterval = setInterval(() => {
+			i = ++i % 4;
+			$scope.loading = "Loading " + Array(i + 1).join(".");
+			$scope.$apply();
+		}, 800);
+	};
+
+	const stopLoader = () => {
+		$scope.isLoading = false;
+		clearInterval($scope.loadingInterval);
+		$scope.$apply();
+	};
+
 	const handleError = err => {
-		$scope.message = err.data.err.message;
+		if (err.data.err.message == "Cannot read property 'geometry' of undefined") {
+			$scope.message = "Invalid location. Please try again";
+		} else {
+			$scope.message = "Oops! Something went wrong. Please refresh and try again.";
+		}
 		$scope.$apply();
 	};
 
 	$scope.clearErrorBox = () => {
 		$scope.message = "";
-		$scope.search = "";
+		$scope.query = "";
 	};
 
 	const displayWeather = response => {
@@ -83,50 +103,34 @@ const MainController = ($scope, weatherService) => {
 
 	$scope.search = e => {
 		if (e.which === 13) {
-			//remove spaces from the search value
 			const query = $scope.query.split(" ").join("");
-			let location;
-			//Is the search value a zipcode?
 			if (parseInt(query) && query.length === 5) {
-				location = `components=postal_code:${query}`;
+				getWeatherData("api/search", `components=postal_code:${query}`);
 			} else {
-				location = `address=${query}&components=country:US`;
+				getWeatherData("api/search", `address=${query}&components=country:US`);
 			}
-			getWeatherData(location);
 		}
 	};
 
-	const getCurrentLocationData = (() => {
-		var _ref = _asyncToGenerator(function* () {
+	const getWeatherData = (() => {
+		var _ref = _asyncToGenerator(function* (url, location) {
 			try {
-				const weatherData = yield weatherService.getCurrentWeather("/api/current");
+				startLoader();
+				const weatherData = yield weatherService.getWeather(url, location);
 				displayWeather(weatherData);
 			} catch (err) {
 				handleError(err);
+			} finally {
+				stopLoader();
 			}
 		});
 
-		return function getCurrentLocationData() {
+		return function getWeatherData(_x, _x2) {
 			return _ref.apply(this, arguments);
 		};
 	})();
 
-	const getWeatherData = (() => {
-		var _ref2 = _asyncToGenerator(function* (location) {
-			try {
-				const weatherData = yield weatherService.getWeather("api/search", location);
-				displayWeather(weatherData);
-			} catch (err) {
-				handleError(err);
-			}
-		});
-
-		return function getWeatherData(_x) {
-			return _ref2.apply(this, arguments);
-		};
-	})();
-
-	getCurrentLocationData();
+	getWeatherData("/api/current");
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (MainController);
@@ -141,14 +145,11 @@ const MainController = ($scope, weatherService) => {
 function weatherService($http) {
 
 	this.getWeather = (url, location) => {
-		return $http.post(url, { location });
-	};
-
-	this.getCurrentWeather = url => {
+		if (location) return $http.post(url, { location });
 		return new Promise(resolve => {
 			navigator.geolocation.getCurrentPosition(position => {
-				let { latitude, longitude } = position.coords;
-				resolve($http.post(url, { latitude, longitude }));
+				const { latitude: lat, longitude: lng } = position.coords;
+				resolve($http.post(url, { lat, lng }));
 			});
 		});
 	};

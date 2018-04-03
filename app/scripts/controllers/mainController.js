@@ -2,16 +2,36 @@
 
 const MainController = ($scope, weatherService) => {
 	
+	const startLoader = () => {
+		let i = 0;
+		$scope.isLoading = true;
+		$scope.loadingInterval = setInterval(() => {
+			i = ++i % 4;
+			$scope.loading = "Loading " + Array(i + 1).join(".");
+			$scope.$apply();
+		}, 800);
+	};
+
+	const stopLoader = () => {
+		$scope.isLoading = false;
+		clearInterval($scope.loadingInterval);
+		$scope.$apply();
+	};
+
 
 	const handleError = (err) => {
-		$scope.message = err.data.err.message;
+		if(err.data.err.message == "Cannot read property 'geometry' of undefined") {
+			$scope.message = "Invalid location. Please try again";
+		} else {
+			$scope.message = "Oops! Something went wrong. Please refresh and try again.";
+		}
 		$scope.$apply();
 	};
 
 
 	$scope.clearErrorBox = () => {
 		$scope.message = "";
-		$scope.search = "";
+		$scope.query = "";
 	};
 
 
@@ -28,40 +48,30 @@ const MainController = ($scope, weatherService) => {
 
 	$scope.search = (e) => {
 		if(e.which === 13) {
-			//remove spaces from the search value
 			const query = $scope.query.split(" ").join("");
-			let location;
-			//Is the search value a zipcode?
 			if(parseInt(query) && query.length === 5) {
-				location = `components=postal_code:${query}`;
+				getWeatherData("api/search", `components=postal_code:${query}`);
 			} else {
-				location = `address=${query}&components=country:US`;
+				getWeatherData("api/search", `address=${query}&components=country:US`);
 			}
-			getWeatherData(location);
 		}
 	};
 
-	const getCurrentLocationData = async () => {
+
+	const getWeatherData = async (url, location) => {
 		try {
-			const weatherData = await weatherService.getCurrentWeather("/api/current");
+			startLoader();
+			const weatherData = await weatherService.getWeather(url, location);
 			displayWeather(weatherData);
 		} catch(err) {
 			handleError(err);
-		}
-	}
-
-
-	const getWeatherData = async (location) => {
-		try {
-			const weatherData = await weatherService.getWeather("api/search", location);
-			displayWeather(weatherData);
-		} catch(err) {
-			handleError(err);
+		} finally {
+			stopLoader();
 		}
 	};
 
-	getCurrentLocationData();
 
+	getWeatherData("/api/current");
 	
 };
 

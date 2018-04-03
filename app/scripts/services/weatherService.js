@@ -3,17 +3,14 @@
 function weatherService($http) {
 
 	this.getWeather = (url, location) => {
-		return $http.post(url, { location });
-	};
-
-	this.getCurrentWeather = url => {
+		if(location) return $http.post(url, { location });
 		return new Promise(resolve => {
 			navigator.geolocation.getCurrentPosition(position => {
-				let { latitude, longitude } = position.coords;
-				resolve($http.post(url, { latitude, longitude }));
+				const { latitude: lat, longitude: lng } = position.coords;
+				resolve($http.post(url, { lat, lng }));
 			});
-		})
-	}
+		});
+	};
 }
 
 export default weatherService;
