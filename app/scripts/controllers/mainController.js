@@ -2,35 +2,18 @@
 
 const MainController = ($scope, weatherService) => {
 	
-	const startLoader = () => {
-		let i = 0;
-		$scope.isLoading = true;
-		$scope.loadingInterval = setInterval(() => {
-			i = ++i % 4;
-			$scope.loading = "Loading " + Array(i + 1).join(".");
-			$scope.$apply();
-		}, 800);
-	};
-
-	const stopLoader = () => {
-		$scope.isLoading = false;
-		clearInterval($scope.loadingInterval);
-		$scope.$apply();
-	};
-
-
+	
 	const handleError = (err) => {
-		if(err.data.err.message == "Cannot read property 'geometry' of undefined") {
-			$scope.message = "Invalid location. Please try again";
+		if(err.data == "Cannot read property 'geometry' of undefined") {
+			$scope.error = "Invalid location. Please try again";
 		} else {
-			$scope.message = "Oops! Something went wrong. Please refresh and try again.";
+			$scope.error = "Oops! Something went wrong. Please refresh and try again.";
 		}
-		$scope.$apply();
 	};
 
 
 	$scope.clearErrorBox = () => {
-		$scope.message = "";
+		$scope.error = "";
 		$scope.query = "";
 	};
 
@@ -60,13 +43,13 @@ const MainController = ($scope, weatherService) => {
 
 	const getWeatherData = async (url, location) => {
 		try {
-			startLoader();
+			$scope.isLoading = true;
 			const weatherData = await weatherService.getWeather(url, location);
 			displayWeather(weatherData);
 		} catch(err) {
 			handleError(err);
 		} finally {
-			stopLoader();
+			$scope.isLoading = false;
 		}
 	};
 

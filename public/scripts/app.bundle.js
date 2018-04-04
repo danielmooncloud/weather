@@ -17,11 +17,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_mainController_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_crit_scss__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scss_application_crit_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__scss_application_crit_scss__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__scss_application_med_scss__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__scss_application_med_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__scss_application_med_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scripts_directives_keypress_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scripts_directives_loader_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__scripts_directives_handleError_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__scss_application_crit_scss__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__scss_application_crit_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__scss_application_crit_scss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__scss_application_med_scss__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__scss_application_med_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__scss_application_med_scss__);
 
 
 
@@ -33,7 +35,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module("weatherApp", [__WEBPACK_IMPORTED_MODULE_1_angular_route___default.a, __WEBPACK_IMPORTED_MODULE_2_angular_sanitize___default.a, "angular-skycons"]).config(["$locationProvider", "$routeProvider", __WEBPACK_IMPORTED_MODULE_3__scripts_config_AppConfig_js__["a" /* default */]]).service("weatherService", ["$http", __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__["a" /* default */]]).filter("degreeFilter", __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__["a" /* default */]).directive("onKeypress", __WEBPACK_IMPORTED_MODULE_7__scripts_directives_search_js__["a" /* default */]).controller("MainController", ["$scope", "weatherService", __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_mainController_js__["a" /* default */]]);
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module("weatherApp", [__WEBPACK_IMPORTED_MODULE_1_angular_route___default.a, __WEBPACK_IMPORTED_MODULE_2_angular_sanitize___default.a, "angular-skycons"]).config(["$locationProvider", "$routeProvider", __WEBPACK_IMPORTED_MODULE_3__scripts_config_AppConfig_js__["a" /* default */]]).service("weatherService", ["$http", __WEBPACK_IMPORTED_MODULE_5__scripts_services_weatherService_js__["a" /* default */]]).filter("degreeFilter", __WEBPACK_IMPORTED_MODULE_6__scripts_directives_degreeFilter_js__["a" /* default */]).directive("onKeypress", __WEBPACK_IMPORTED_MODULE_7__scripts_directives_keypress_js__["a" /* default */]).directive("loader", ["$interval", __WEBPACK_IMPORTED_MODULE_8__scripts_directives_loader_js__["a" /* default */]]).directive("handleError", __WEBPACK_IMPORTED_MODULE_9__scripts_directives_handleError_js__["a" /* default */]).controller("MainController", ["$scope", "weatherService", __WEBPACK_IMPORTED_MODULE_4__scripts_controllers_mainController_js__["a" /* default */]]);
 
 /***/ }),
 /* 4 */,
@@ -61,33 +66,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 const MainController = ($scope, weatherService) => {
 
-	const startLoader = () => {
-		let i = 0;
-		$scope.isLoading = true;
-		$scope.loadingInterval = setInterval(() => {
-			i = ++i % 4;
-			$scope.loading = "Loading " + Array(i + 1).join(".");
-			$scope.$apply();
-		}, 800);
-	};
-
-	const stopLoader = () => {
-		$scope.isLoading = false;
-		clearInterval($scope.loadingInterval);
-		$scope.$apply();
-	};
-
 	const handleError = err => {
-		if (err.data.err.message == "Cannot read property 'geometry' of undefined") {
-			$scope.message = "Invalid location. Please try again";
+		if (err.data == "Cannot read property 'geometry' of undefined") {
+			$scope.error = "Invalid location. Please try again";
 		} else {
-			$scope.message = "Oops! Something went wrong. Please refresh and try again.";
+			$scope.error = "Oops! Something went wrong. Please refresh and try again.";
 		}
-		$scope.$apply();
 	};
 
 	$scope.clearErrorBox = () => {
-		$scope.message = "";
+		$scope.error = "";
 		$scope.query = "";
 	};
 
@@ -115,13 +103,13 @@ const MainController = ($scope, weatherService) => {
 	const getWeatherData = (() => {
 		var _ref = _asyncToGenerator(function* (url, location) {
 			try {
-				startLoader();
+				$scope.isLoading = true;
 				const weatherData = yield weatherService.getWeather(url, location);
 				displayWeather(weatherData);
 			} catch (err) {
 				handleError(err);
 			} finally {
-				stopLoader();
+				$scope.isLoading = false;
 			}
 		});
 
@@ -163,6 +151,7 @@ function weatherService($http) {
 
 "use strict";
 
+
 const degreeFilter = () => {
 	return number => {
 		return Math.floor(5 / 9 * (number - 32));
@@ -178,7 +167,7 @@ const degreeFilter = () => {
 "use strict";
 
 
-const search = () => {
+const keypress = () => {
 	return {
 		scope: {
 			handler: "&onKeypress"
@@ -191,16 +180,70 @@ const search = () => {
 	};
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (search);
+/* harmony default export */ __webpack_exports__["a"] = (keypress);
 
 /***/ }),
 /* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+
+const loader = $interval => {
+
+	const template = `<div class="loading" ng-show="isLoading">
+			<span>{{ loading }}</span>
+		</div>`;
+
+	function link(scope, element) {
+		let i = 0;
+		const loadingInterval = setInterval(() => {
+			i = ++i % 4;
+			scope.loading = "Loading " + Array(i + 1).join(".");
+			scope.$apply();
+		}, 800);
+
+		element.on("$destroy", function () {
+			$interval.cancel(loadingInterval);
+		});
+	}
+
+	return {
+		restrict: "E",
+		link,
+		template
+	};
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (loader);
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+
+const handleError = () => {
+
+	const template = `<div class="error-box" ng-show="error">
+			<h2>{{error}}</h2>
+			<span ng-click="clearErrorBox()">X</span>
+		</div>`;
+
+	return { template };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (handleError);
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

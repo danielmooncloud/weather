@@ -1,6 +1,6 @@
 
 
-const search = () => {
+const keypress = () => {
 	return {
 		scope: {
 			handler: "&onKeypress"
@@ -14,4 +14,4 @@ const search = () => {
 };
 
 
-export default search;
+export default keypress;
