@@ -22,7 +22,7 @@ const ensureSecure = require("./routes/ensureSecure.js");
 //declare variables
 const port = process.env.PORT || 4000;
 const app = express();
-const http = express();
+//const http = express();
 
 
 app.use(logger("dev"));
@@ -30,7 +30,7 @@ app.use(jsonParser());
 
 
 //Redirect traffic to secure connection
-http.all("*", ensureSecure(port));
+//http.all("*", ensureSecure(port));
 app.use(favicon("./public/css/images/cloud.ico"));
 
 
@@ -40,7 +40,7 @@ app.get('*.css', serveCompressed('text/css'))
 
 
 app.use('/api', routes);
-app.get("/", pushAssets);
+//app.get("/", pushAssets);
 
 app.use(express.static("public"));
 
@@ -61,13 +61,13 @@ app.use((err, req, res, next) => {
 }); 
 
 
-http.listen(3000)
-spdy
-	.createServer({
-		key: fs.readFileSync('encryption/server.key'),
-		cert: fs.readFileSync('encryption/server.crt')
-	}, app)
-	.listen(port, err => {
+//http.listen(3000)
+// spdy
+// 	.createServer({
+// 		key: fs.readFileSync('encryption/server.key'),
+// 		cert: fs.readFileSync('encryption/server.crt')
+// 	}, app)
+	app.listen(port, err => {
 		if(err) {
 			console.error(error);
 			return process.exit(1);
