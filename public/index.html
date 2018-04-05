@@ -22,9 +22,8 @@
             		<div class="nav-button"><a href="#/hourly"><h3>HOURLY</h3></a></div>    	
 				</div> 
             </div>
-			<div class="inputdiv">
-				<label for="search">Search Your Area</label>			
-                <input type="text" id="search" ng-model="query" on-Keypress="search($event)" placeholder="CITY or ZIP"></input>                                  
+			<div class="inputdiv">			
+                <input type="text" id="search" ng-model="query" on-Keypress="search($event)" placeholder="CITY or ZIP" aria-label="Search Your Area"></input>                                  
             </div>
 		</div>		
 		<div class="main" ng-hide="isLoading || error">

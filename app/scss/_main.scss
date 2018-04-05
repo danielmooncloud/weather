@@ -109,10 +109,6 @@ body {
 			text-align: center;
     		padding: 20px;
 
-			label {
-				color: black;
-				height: 0;
-			}
 			input {
 				margin: auto;
 				@include text(16px);

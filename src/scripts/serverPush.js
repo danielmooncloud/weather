@@ -10,7 +10,7 @@ const dependencyTree = {
         "/css/app.css": "text/css",
         "/css/images/cloud.png": "image/png",
         "/css/media.css": "text/css",
-        "/scripts/vendor.bundle.js": "application/javascript",
+        //"/scripts/vendor.bundle.js": "application/javascript",
         "/scripts/app.bundle.js": "application/javascript",
         "/scripts/angular-skycons.min.js": "application/javascript",
         "/views/daily.html": "text/html",
